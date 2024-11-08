@@ -39,6 +39,8 @@ services:
       - DB_PASSWORD=admin
       - DB_HOST=postgres
       - DB_PORT=5432
+
+      - DJANGO_SETTINGS_MODULE=core.settings.production
     security_opt:
       - seccomp:unconfined
     ports:
