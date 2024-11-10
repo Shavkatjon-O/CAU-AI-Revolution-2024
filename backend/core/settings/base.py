@@ -53,6 +53,7 @@ CUSTOM_APPS = [
     "apps.users",
     "apps.common",
     "apps.ingredients",
+    "apps.cart"
 ]
 
 THIRD_PARTY_APPS = [
