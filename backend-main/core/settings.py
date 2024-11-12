@@ -19,6 +19,7 @@ ALLOWED_HOSTS = (
     else [
         "cau-hackathon-admin.falconsoft.uz",
         "cau-hackathon.falconsoft.uz",
+        "cau-hackathon-new.falconsoft.uz",
     ]
 )
 
@@ -28,6 +29,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://cau-hackathon-admin.falconsoft.uz",
     "https://cau-hackathon.falconsoft.uz",
     "http://cau-hackathon.falconsoft.uz",
+    "https://cau-hackathon-new.falconsoft.uz",
+    "http://cau-hackathon-new.falconsoft.uz",
     "http://localhost:3000",
 ]
 
@@ -38,6 +41,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://cau-hackathon-admin.falconsoft.uz",
     "https://cau-hackathon.falconsoft.uz",
     "http://cau-hackathon.falconsoft.uz",
+    "https://cau-hackathon-new.falconsoft.uz",
+    "http://cau-hackathon-new.falconsoft.uz",
     "http://localhost:3000",
 ]
 
