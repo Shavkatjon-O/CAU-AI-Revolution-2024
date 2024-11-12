@@ -10,3 +10,8 @@ deploy:
 	git pull origin main
 	docker compose down
 	docker compose up -d --build
+
+push:
+	git add .
+	git commit -m "fix"
+	git push origin main
