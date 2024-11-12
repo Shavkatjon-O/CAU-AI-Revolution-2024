@@ -39,6 +39,12 @@ const FormSchema = z.object({
   priority: z.string().min(1, "Priority is required."),
 });
 
+const priorityColors = {
+  High: "bg-red-500 text-white",
+  Medium: "bg-yellow-500 text-white",
+  Low: "bg-green-500 text-white",
+};
+
 const Page = () => {
   const [mealPlans, setMealPlans] = useState<MealPlan[]>([]);
   const [newMealName, setNewMealName] = useState("");
@@ -98,6 +104,12 @@ const Page = () => {
 
   const handleIngredientChange = (mealId: string, value: string) => {
     setNewMealIngredients((prev) => ({ ...prev, [mealId]: value }));
+  };
+
+  // Format meal time as "HH:MM"
+  const formatMealTime = (mealTime: string) => {
+    const [hour, minute] = mealTime.split(":");
+    return `${hour}:${minute}`;
   };
 
   return (
@@ -216,7 +228,10 @@ const Page = () => {
               <div>
                 <h2 className="text-xl">{meal.mealName}</h2>
                 <p className="text-sm text-custom mt-4">
-                  Time: {meal.mealTime} | Priority: {meal.priority}
+                  Time: {formatMealTime(meal.mealTime)} |
+                  <span className={`ml-2 px-3 py-1 text-sm font-semibold rounded-full ${priorityColors[meal.priority as keyof typeof priorityColors]}`}>
+                    {meal.priority}
+                  </span>
                 </p>
                 <div className="mt-4">
                   <div className="flex flex-wrap gap-2">
@@ -262,7 +277,6 @@ const Page = () => {
           </Card>
         ))}
       </div>
-
     </div>
   );
 };
