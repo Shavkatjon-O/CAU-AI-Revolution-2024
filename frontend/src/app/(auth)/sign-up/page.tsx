@@ -39,20 +39,24 @@ const Page = () => {
       setStep(step + 1);
     } else {
       try {
-        await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register/`, {
+        
+        const payload = {
           email: formData.email,
           password: formData.password,
           first_name: formData.firstName,
           last_name: formData.lastName,
-          age: formData.age,
+          age: parseInt(formData.age, 10),
           gender: formData.gender,
-          height: formData.height,
-          weight: formData.weight,
+          height: parseFloat(formData.height),
+          weight: parseFloat(formData.weight),
           activity_level: formData.activityLevel,
+          goal: formData.goal,
           dietary_preferences: formData.dietaryPreferences,
           allergies: formData.allergies,
-          goal: formData.goal,
-        });
+        }
+        console.log(payload)
+        
+        await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register/`, payload);
 
         const tokenResponse = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/token/`, {
           email: formData.email,
