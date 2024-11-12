@@ -1,5 +1,6 @@
 "use client";
 
+import Image from 'next/image';
 import { useForm, FormProvider } from 'react-hook-form';
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -49,9 +50,14 @@ const Page = () => {
 
   return (
     <FormProvider {...methods}>
-      <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-lg">
-        <h2 className="text-2xl font-bold mb-6 text-center">{steps[step]}</h2>
+      <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-lg shadow-2xl border border-custom">
+        <div className='flex items-center justify-center pb-6 font-semibold text-custom'>
+          <span className='text-2xl'>SafeBite</span>
+        </div>
 
+        <Image src="/img/sign-up-image.svg" alt="Image" width={256} height={256} className="mx-auto w-full mb-6 shadow-md rounded-3xl" />
+
+        <h2 className="text-2xl font-bold mb-6 text-center">{steps[step]}</h2>
         {/* Step 1 - Personal Info */}
         {step === 0 && (
           <>
@@ -63,7 +69,7 @@ const Page = () => {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
-                className="pl-10"
+                className="pl-10 h-12 focus:border-custom"
               />
               <Mail size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
@@ -76,7 +82,7 @@ const Page = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter your password"
-                className="pl-10"
+                className="pl-10 h-12 focus:border-custom"
               />
               <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
@@ -88,7 +94,7 @@ const Page = () => {
                 value={formData.firstName}
                 onChange={handleChange}
                 placeholder="First Name"
-                className="pl-10"
+                className="pl-10 h-12 focus:border-custom"
               />
               <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
@@ -100,7 +106,7 @@ const Page = () => {
                 value={formData.lastName}
                 onChange={handleChange}
                 placeholder="Last Name"
-                className="pl-10"
+                className="pl-10 h-12 focus:border-custom"
               />
               <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
@@ -118,7 +124,7 @@ const Page = () => {
                 value={formData.age}
                 onChange={handleChange}
                 placeholder="Age"
-                className="pl-10"
+                className="pl-10 h-12 focus:border-custom"
               />
               <Calendar size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
@@ -130,7 +136,7 @@ const Page = () => {
                 value={formData.gender}
                 onChange={handleChange}
                 placeholder="Gender"
-                className="pl-10"
+                className="pl-10 h-12 focus:border-custom"
               />
               <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
@@ -143,7 +149,7 @@ const Page = () => {
                 value={formData.height}
                 onChange={handleChange}
                 placeholder="Height in cm"
-                className="pl-10"
+                className="pl-10 h-12 focus:border-custom"
               />
               <Calendar size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
@@ -156,7 +162,7 @@ const Page = () => {
                 value={formData.weight}
                 onChange={handleChange}
                 placeholder="Weight in kg"
-                className="pl-10"
+                className="pl-10 h-12 focus:border-custom"
               />
               <Calendar size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
@@ -173,7 +179,7 @@ const Page = () => {
                 value={formData.activityLevel}
                 onChange={handleChange}
                 placeholder="Activity Level"
-                className="pl-10"
+                className="pl-10 h-12 focus:border-custom"
               />
               <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
@@ -185,7 +191,7 @@ const Page = () => {
                 value={formData.dietaryPreferences}
                 onChange={handleChange}
                 placeholder="Dietary Preferences (e.g. vegan, keto)"
-                className="pl-10"
+                className="pl-10 h-12 focus:border-custom"
               />
               <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
@@ -197,7 +203,7 @@ const Page = () => {
                 value={formData.allergies}
                 onChange={handleChange}
                 placeholder="Any allergies?"
-                className="pl-10"
+                className="pl-10 h-12 focus:border-custom"
               />
               <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
@@ -216,17 +222,17 @@ const Page = () => {
           </Button>
           <Button
             onClick={handleNext}
-            className="w-32 bg-custom hover:bg-indigo-800"
+            className="w-32 bg-custom hover:bg-indigo-800 font-semibold"
           >
             {step === steps.length - 1 ? (
               <>
                 Submit
-                <ArrowRight size={16} className="ml-2" />
+                <ArrowRight className="ml-1" />
               </>
             ) : (
               <>
                 Next
-                <ArrowRight size={16} className="ml-2" />
+                <ArrowRight className="ml-1" />
               </>
             )}
           </Button>
