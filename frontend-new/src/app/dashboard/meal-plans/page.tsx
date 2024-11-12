@@ -29,7 +29,7 @@ import {
 type MealPlan = {
   id: string;
   mealName: string;
-  mealTime: string; // Time string now
+  mealTime: string;
   ingredients: string[];
   priority: string;
 };
@@ -47,7 +47,6 @@ const Page = () => {
     resolver: zodResolver(FormSchema),
   });
 
-  // Load meal plans from cookies on mount
   useEffect(() => {
     const storedMealPlans = Cookies.get("mealPlans");
     if (storedMealPlans) {
@@ -55,7 +54,6 @@ const Page = () => {
     }
   }, []);
 
-  // Save meal plans to cookies when updated
   useEffect(() => {
     Cookies.set("mealPlans", JSON.stringify(mealPlans), { expires: 7 });
   }, [mealPlans]);
@@ -66,7 +64,7 @@ const Page = () => {
     const newMeal: MealPlan = {
       id: Date.now().toString(),
       mealName: newMealName,
-      mealTime: data.mealTime, // Store time as a string
+      mealTime: data.mealTime,
       ingredients: [],
       priority: data.priority,
     };
@@ -103,11 +101,10 @@ const Page = () => {
   };
 
   return (
-    <div className="py-6 px-6 max-w-4xl mx-auto h-full overflow-y-scroll">
-      <h1 className="text-3xl font-semibold text-custom px-6 pb-6">Meal Planner</h1>
+    <div className="pt-16 pb-20 max-w-4xl mx-auto h-full overflow-y-scroll">
+      <h1 className="text-3xl font-semibold text-custom px-6 pt-6 text-center">Meal Planner</h1>
 
-      {/* Meal Plan Creation Form */}
-      <div className="bg-white p-6 rounded-lg mb-6">
+      <div className="p-6 rounded-lg mb-6">
         <span className="mb-1">Title</span>
         <Input
           className="mb-4 mt-1 h-12"
@@ -117,7 +114,6 @@ const Page = () => {
         />
 
         <FormProvider {...form}>
-          {/* Time Picker for Meal Time */}
           <div className="mb-4 flex items-center">
             <FormField
               control={form.control}
@@ -213,34 +209,34 @@ const Page = () => {
       </div>
 
       {/* Meal Plans Display */}
-      <div className="space-y-6">
+      <div className="space-y-6 border-t">
         {mealPlans.map((meal) => (
           <Card key={meal.id} className="p-6 bg-white rounded-lg border-none shadow-none">
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="text-xl font-semibold">{meal.mealName}</h2>
+                <h2 className="text-xl">{meal.mealName}</h2>
                 <p className="text-sm text-custom mt-4">
                   Time: {meal.mealTime} | Priority: {meal.priority}
                 </p>
                 <div className="mt-4">
-                  <div className="w-max bg-indigo-500 rounded-lg mb-4">
-                    <h3 className="text-md p-2 text-white">Ingredients</h3>
-                  </div>
-
-                  <ul className="list-disc pl-6">
+                  <div className="flex flex-wrap gap-2">
                     {meal.ingredients.length > 0 ? (
                       meal.ingredients.map((ingredient, idx) => (
-                        <li key={idx} className="text-sm">{ingredient}</li>
+                        <span
+                          key={idx}
+                          className="inline-block px-3 py-1 text-sm font-semibold text-white bg-blue-500 rounded-full"
+                        >
+                          {ingredient}
+                        </span>
                       ))
                     ) : (
-                      <li className="text-sm text-gray-500">No ingredients yet</li>
+                      <span className="text-sm text-gray-500">No ingredients yet</span>
                     )}
-                  </ul>
+                  </div>
                 </div>
               </div>
               <Button
                 onClick={() => removeMealPlan(meal.id)}
-                // className=""
                 size="icon"
                 variant="secondary"
               >
@@ -266,6 +262,7 @@ const Page = () => {
           </Card>
         ))}
       </div>
+
     </div>
   );
 };

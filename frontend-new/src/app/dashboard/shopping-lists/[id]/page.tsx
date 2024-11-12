@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useState, useEffect, FormEvent } from 'react';
 import Cookies from 'js-cookie';
 import { useParams } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface Ingredient {
   id: number;
@@ -16,11 +18,12 @@ interface ShoppingList {
   items: Ingredient[];
 }
 
-const ShoppingList: React.FC = () => {
+const Page: React.FC = () => {
   const router = useRouter();
   const { id } = useParams() as { id: string };
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [newIngredientName, setNewIngredientName] = useState('');
+  const [listName, setListName] = useState('');
 
   useEffect(() => {
     const savedLists = Cookies.get('shoppingLists');
@@ -29,6 +32,7 @@ const ShoppingList: React.FC = () => {
       const list = lists.find((list) => list.id === parseInt(id));
       if (list) {
         setIngredients(list.items);
+        setListName(list.name);
       }
     }
   }, [id]);
@@ -64,41 +68,43 @@ const ShoppingList: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto py-20 text-center">
-      <h2 className="text-3xl font-bold mb-8">Shopping List {id}</h2>
+    <div className="pt-16 pb-20 px-6 text-center">
+      <h2 className="text-2xl text-custom font-bold my-6">{listName}</h2>
       <form onSubmit={handleAddIngredient} className="mb-6">
-        <input
-          type="text"
-          value={newIngredientName}
-          onChange={(e) => setNewIngredientName(e.target.value)}
-          placeholder="Enter ingredient name"
-          className="px-4 py-2 border rounded mr-2"
-        />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
-          Add Ingredient
-        </button>
+        <div className="flex">
+          <Input
+            type="text"
+            value={newIngredientName}
+            onChange={(e) => setNewIngredientName(e.target.value)}
+            placeholder="Enter ingredient name"
+            className="mr-2 w-full h-12"
+          />
+          <Button type="submit" className="h-12 bg-custom hover:bg-indigo-700 text-white px-4 py-2 rounded">
+            Add Ingredient
+          </Button>
+        </div>
       </form>
       <ul className="space-y-4">
         {ingredients.map(ingredient => (
-          <li key={ingredient.id} className="bg-gray-100 p-4 rounded shadow-md flex justify-between items-center">
-            <span>{ingredient.name}</span>
-            <button
+          <li key={ingredient.id} className="bg-indigo-50 p-4 rounded-md flex justify-between items-center">
+            <span className="font-semibold text-blue-600">{ingredient.name}</span>
+            <Button
               onClick={() => handleRemoveIngredient(ingredient.id)}
-              className="text-red-500"
+              className="text-white bg-indigo-500 hover:bg-indigo-700"
             >
               Remove
-            </button>
+            </Button>
           </li>
         ))}
       </ul>
-      <button
+      <Button
         onClick={() => router.back()}
-        className="mt-6 text-blue-500 hover:underline"
+        className="mt-6 h-12 bg-custom hover:bg-indigo-800"
       >
         Back to Lists
-      </button>
+      </Button>
     </div>
   );
 };
 
-export default ShoppingList;
+export default Page;
