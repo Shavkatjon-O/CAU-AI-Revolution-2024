@@ -70,7 +70,7 @@ const ChatPage = () => {
           >
             <div
               className={`max-w-xs px-4 py-3 rounded-t-2xl ${
-                message.sender === "User" ? "bg-custom text-white rounded-l-2xl" : "bg-slate-300 rounded-r-xl"
+                message.sender === "User" ? "bg-custom text-white rounded-l-2xl" : "bg-green-400 rounded-r-xl"
               }`}
             >
               <div className="flex flex-col space-y-2">
@@ -78,7 +78,7 @@ const ChatPage = () => {
                   <span>{message.text}</span>
                 </div>
                 <div className="flex items-center justify-between space-x-2">
-                  <div className="text-xs font-semibold text-slate-300">{message.timestamp}</div>
+                  <div className="text-xs font-semibold text-white">{message.timestamp}</div>
                   <div>{message.sender === "User" && (<CheckCheck className="text-slate-300 size-4" />)}</div>
                 </div>
               </div>
