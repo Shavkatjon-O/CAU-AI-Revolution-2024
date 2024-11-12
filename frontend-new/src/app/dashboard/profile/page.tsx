@@ -68,7 +68,7 @@ const Page = () => {
           ) : profile ? (
             <>
               <div className="pt-10 flex flex-col items-center">
-                <div className="bg-indigo-100 text-slate-500 p-6 rounded-full">
+                <div className="bg-indigo-50 border border-indigo-200 text-indigo-500 p-6 rounded-full">
                   <User className="w-20 h-20" />
                 </div>
                 <div className="mt-2 flex flex-col items-center">
