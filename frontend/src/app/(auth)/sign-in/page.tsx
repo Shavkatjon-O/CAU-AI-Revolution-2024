@@ -16,8 +16,8 @@ const Page = () => {
   const handleSignUp = async () => {
     try {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/token/`, {
-        email,
-        password,
+        email: email,
+        password: password,
       });
 
       if (response.status === 200) {
