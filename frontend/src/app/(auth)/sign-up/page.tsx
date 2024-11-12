@@ -65,7 +65,7 @@ const Page = () => {
                 placeholder="Enter your email"
                 className="pl-10"
               />
-              <Mail size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <Mail size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
 
             <div className="relative mt-4">
@@ -78,7 +78,7 @@ const Page = () => {
                 placeholder="Enter your password"
                 className="pl-10"
               />
-              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
 
             <div className="relative mt-4">
@@ -90,7 +90,7 @@ const Page = () => {
                 placeholder="First Name"
                 className="pl-10"
               />
-              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
 
             <div className="relative mt-4">
@@ -102,7 +102,7 @@ const Page = () => {
                 placeholder="Last Name"
                 className="pl-10"
               />
-              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
           </>
         )}
@@ -120,7 +120,7 @@ const Page = () => {
                 placeholder="Age"
                 className="pl-10"
               />
-              <Calendar size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <Calendar size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
 
             <div className="relative mt-4">
@@ -132,7 +132,7 @@ const Page = () => {
                 placeholder="Gender"
                 className="pl-10"
               />
-              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
 
             <div className="relative mt-4">
@@ -145,7 +145,7 @@ const Page = () => {
                 placeholder="Height in cm"
                 className="pl-10"
               />
-              <Calendar size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <Calendar size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
 
             <div className="relative mt-4">
@@ -158,7 +158,7 @@ const Page = () => {
                 placeholder="Weight in kg"
                 className="pl-10"
               />
-              <Calendar size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <Calendar size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
           </>
         )}
@@ -175,7 +175,7 @@ const Page = () => {
                 placeholder="Activity Level"
                 className="pl-10"
               />
-              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
 
             <div className="relative mt-4">
@@ -187,7 +187,7 @@ const Page = () => {
                 placeholder="Dietary Preferences (e.g. vegan, keto)"
                 className="pl-10"
               />
-              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
 
             <div className="relative mt-4">
@@ -199,7 +199,7 @@ const Page = () => {
                 placeholder="Any allergies?"
                 className="pl-10"
               />
-              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+              <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
             </div>
           </>
         )}
