@@ -5,5 +5,5 @@ const NavigationTopBar = () => {
 	  </div>
 	);
   };
-  
+
   export default NavigationTopBar;

@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Image from "next/image";
-import Link from "next/link"; 
+import Link from "next/link";
 
 const Page = () => {
   const router = useRouter();

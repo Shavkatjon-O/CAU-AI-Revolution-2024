@@ -74,15 +74,17 @@ output_parser = StrOutputParser()
 user_info = {
     "dietary_preferences": "vegan",
     "health_goals": "weight loss",
-    "lifestyle_details": "active but stressed"
+    "lifestyle_details": "active but stressed",
 }
+
 
 def generate_rag_prompt(user_info):
     return rag_prompt_template.format(
-        dietary_preferences=user_info['dietary_preferences'],
-        health_goals=user_info['health_goals'],
-        lifestyle_details=user_info['lifestyle_details']
+        dietary_preferences=user_info["dietary_preferences"],
+        health_goals=user_info["health_goals"],
+        lifestyle_details=user_info["lifestyle_details"],
     )
+
 
 query = {
     # "context": retriever | format_docs,
@@ -90,12 +92,14 @@ query = {
     "question": RunnablePassthrough(),
 }
 
+
 def get_chain(user_info):
     rag_prompt = RunnableLambda(lambda user_info: generate_rag_prompt(user_info))
 
     chain = query["question"] | rag_prompt | llm | output_parser
 
     return chain
+
 
 chain = get_chain(user_info)
 

@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+
 import os
 import core.utils
 import environ
@@ -22,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # READING ENV
 env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -39,14 +40,14 @@ CSRF_ALLOWED_HOSTS = ["*"]
 # Application definition
 
 DJANGO_APPS = [
-    'unfold',
-    'unfold.contrib.filters',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',   
+    "unfold",
+    "unfold.contrib.filters",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 ]
 
 CUSTOM_APPS = [
@@ -58,8 +59,8 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "drf_spectacular",
     "drf_spectacular_sidecar",
-    "rosetta", # ?
-    'corsheaders',
+    "rosetta",  # ?
+    "corsheaders",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + CUSTOM_APPS + THIRD_PARTY_APPS
@@ -69,69 +70,69 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "core.authentication.CustomJWTAuthentication",
         "rest_framework.authentication.SessionAuthentication",
-        ),
+    ),
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.SearchFilter",
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    "EXCEPTION_HANDLER": 'core.exception_handler.custom_exception_handler',
+    "EXCEPTION_HANDLER": "core.exception_handler.custom_exception_handler",
     "PAGE_SIZE": 10,
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'Car Rental API',
-    'DESCRIPTION': 'Car Rental Group',
-    'VERSION': 'v1',
-    'TERMS_OF_SERVICE': 'https://www.google.com/policies/terms/',
-    'CONTACT': {'email': 'info@carrental.group'},
-    'LICENSE': {'name': 'BSD License'},
-    'SERVE_PUBLIC': True,
-    'SERVE_PERMISSIONS': ['rest_framework.permissions.AllowAny'],
-    'GENERATOR_CLASS': 'core.schema.BothHttpAndHttpsSchemaGenerator',
-    'SERVE_INCLUDE_SCHEMA': False,
-    'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
-    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
-    'REDOC_DIST': 'SIDECAR',
-    'PREPROCESSING_HOOKS': [
-        'core.hooks.remove_apis_from_list',
+    "TITLE": "Car Rental API",
+    "DESCRIPTION": "Car Rental Group",
+    "VERSION": "v1",
+    "TERMS_OF_SERVICE": "https://www.google.com/policies/terms/",
+    "CONTACT": {"email": "info@carrental.group"},
+    "LICENSE": {"name": "BSD License"},
+    "SERVE_PUBLIC": True,
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.AllowAny"],
+    "GENERATOR_CLASS": "core.schema.BothHttpAndHttpsSchemaGenerator",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
+    "PREPROCESSING_HOOKS": [
+        "core.hooks.remove_apis_from_list",
     ],
-    'SECURITY': [{'CustomJWT': []}],
+    "SECURITY": [{"CustomJWT": []}],
     # OTHER SETTINGS
     "EXCLUDE_PATH": [reverse_lazy("schema")],
-    "SCHEMA_PATH_PREFIX": r"/api/"
+    "SCHEMA_PATH_PREFIX": r"/api/",
 }
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = 'core.urls'
+ROOT_URLCONF = "core.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+WSGI_APPLICATION = "core.wsgi.application"
 
 
 # Database
@@ -139,7 +140,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     "default": {
-        "ENGINE": 'django.db.backends.postgresql_psycopg2',
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
         "NAME": env.str("DB_NAME"),
         "USER": env.str("DB_USER"),
         "PASSWORD": env.str("DB_PASSWORD"),
@@ -161,16 +162,16 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -178,9 +179,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -190,7 +191,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIRS = (BASE_DIR / "staticfiles",)
 
@@ -200,13 +201,13 @@ MEDIA_ROOT = BASE_DIR / "media"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom User model
 AUTH_USER_MODEL = "users.User"
 
-CORS_ORIGIN_ALLOW_ALL = True # ?
-CORS_ALLOW_CREDENTIALS = True # ?
+CORS_ORIGIN_ALLOW_ALL = True  # ?
+CORS_ALLOW_CREDENTIALS = True  # ?
 
 # Email
 EMAIL_HOST = env.str("EMAIL_HOST")
@@ -217,26 +218,28 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 # Celery
-CELERY_BROKER_URL = 'redis://localhost:6379/1'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
+CELERY_BROKER_URL = "redis://localhost:6379/1"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/1"
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TIMEZONE = "UTC"
 
 # CONSTANTS
-ENCRYPTION_KEY=env.str('ENCRYPTION_KEY').encode()
+ENCRYPTION_KEY = env.str("ENCRYPTION_KEY").encode()
 
-JWT_ALGORITHM = env.str('JWT_ALGORITHM')
-JWT_ACCESS_TOKEN_SECRET=env.str('JWT_ACCESS_TOKEN_SECRET')
-JWT_REFRESH_TOKEN_SECRET=env.str('JWT_REFRESH_TOKEN_SECRET')
+JWT_ALGORITHM = env.str("JWT_ALGORITHM")
+JWT_ACCESS_TOKEN_SECRET = env.str("JWT_ACCESS_TOKEN_SECRET")
+JWT_REFRESH_TOKEN_SECRET = env.str("JWT_REFRESH_TOKEN_SECRET")
 
-REFRESH_TOKEN_EXPIRATION_DAYS=env.str('REFRESH_TOKEN_EXPIRATION_DAYS')
-ACCESS_TOKEN_EXPIRATION_MINUTES=env.str('ACCESS_TOKEN_EXPIRATION_MINUTES')
-JWT_REFRESH_TOKEN_EXPIRATION = env.int('REFRESH_TOKEN_EXPIRATION_DAYS') * 24 * 60 * 60  # in seconds
+REFRESH_TOKEN_EXPIRATION_DAYS = env.str("REFRESH_TOKEN_EXPIRATION_DAYS")
+ACCESS_TOKEN_EXPIRATION_MINUTES = env.str("ACCESS_TOKEN_EXPIRATION_MINUTES")
+JWT_REFRESH_TOKEN_EXPIRATION = (
+    env.int("REFRESH_TOKEN_EXPIRATION_DAYS") * 24 * 60 * 60
+)  # in seconds
 
 OTP_LIFETIME = env.str("OTP_LIFETIME")
 
-REDIS_HOST=env.str("REDIS_HOST")
-REDIS_PORT=env.str("REDIS_PORT")
-REDIS_DB=env.str("REDIS_DB")
+REDIS_HOST = env.str("REDIS_HOST")
+REDIS_PORT = env.str("REDIS_PORT")
+REDIS_DB = env.str("REDIS_DB")

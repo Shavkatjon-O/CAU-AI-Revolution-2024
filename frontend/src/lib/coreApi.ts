@@ -50,7 +50,7 @@ coreApi.interceptors.response.use(
         console.log('Refresh token error:', refreshError);
 
         window.location.href = '/sign-in';
-        
+
         return Promise.reject(error);
       }
     }

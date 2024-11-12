@@ -19,6 +19,7 @@ output_parser = StrOutputParser()
 
 rag_prompt_template = """template"""
 
+
 def query_llm_service(user: User, query: str) -> str:
     # weight = user.weight
     # height = user.height
@@ -28,7 +29,7 @@ def query_llm_service(user: User, query: str) -> str:
     # dietary_preferences = user.dietary_preferences
     # health_goals = user.health_goals
     # lifestyle_details = user.lifestyle_details
-    
+
     # rag_prompt = rag_prompt_template.format(
     #     weight=weight,
     #     height=height,
@@ -51,7 +52,7 @@ def query_llm_service(user: User, query: str) -> str:
         health_goals=user.health_goals,
         lifestyle_details=user.lifestyle_details,
         # question
-        query=query
+        query=query,
     )
 
     chain = rag_prompt | llm | output_parser

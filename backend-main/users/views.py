@@ -17,6 +17,4 @@ class UserProfileView(generics.RetrieveAPIView):
         return self.request.user
 
 
-__all__ = (
-    'UserProfileView',
-)
+__all__ = ("UserProfileView",)

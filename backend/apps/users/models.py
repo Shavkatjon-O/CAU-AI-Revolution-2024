@@ -9,30 +9,31 @@ from apps.users.managers import UserManager
 from apps.common.models import BaseModel
 from apps.common.utils import process_image, process_document
 
+
 class User(AbstractUser, BaseModel):
     email = models.EmailField(unique=True, blank=False)
 
     date_of_birth = models.DateField(null=True, blank=True)
     first_name = models.CharField(max_length=128)
     last_name = models.CharField(max_length=128)
-    
-    image = models.ImageField(upload_to='passports/', blank=True, null=True)
+
+    image = models.ImageField(upload_to="passports/", blank=True, null=True)
 
     username = None
 
-    USERNAME_FIELD = 'email'
-    EMAIL_FIELD = 'email'
+    USERNAME_FIELD = "email"
+    EMAIL_FIELD = "email"
     REQUIRED_FIELDS = []
 
     objects = UserManager()
 
     def __str__(self):
-        return f'{self.id}'
+        return f"{self.id}"
 
     class Meta:
         db_table = "user"
-        verbose_name = ('User')
-        verbose_name_plural = ('Users')
+        verbose_name = "User"
+        verbose_name_plural = "Users"
 
     def save(self, *args, **kwargs):
         is_enter = True
@@ -45,8 +46,10 @@ class User(AbstractUser, BaseModel):
 
         if self.image and self.image != old_image:
             ext = os.path.splitext(self.image.name)[1].lower()
-            if ext in ['.jpg', '.jpeg', '.png']:
-                new_filename, processed_image = process_image(self.image, new_width=800, new_height=800)
+            if ext in [".jpg", ".jpeg", ".png"]:
+                new_filename, processed_image = process_image(
+                    self.image, new_width=800, new_height=800
+                )
                 # Ensure new filename does not append ID multiple times
                 if new_filename.endswith(f"_{self.image.instance.id}"):
                     new_filename = f"{new_filename}_{self.image.instance.id}.jpg"
@@ -62,7 +65,7 @@ class User(AbstractUser, BaseModel):
             if old_image:
                 self.image = old_image
         try:
-            super().save(*args, **kwargs)   
+            super().save(*args, **kwargs)
         except Exception as e:
             print(f"Error in super().save(): {e}")
 
@@ -73,12 +76,13 @@ class User(AbstractUser, BaseModel):
                 os.remove(self.image.path)
         super().delete(*args, **kwargs)
 
-    
+
 class BlacklistedToken(BaseModel):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blacklisted_tokens')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name="blacklisted_tokens"
+    )
     access_token = models.CharField(max_length=1024, unique=True)
     refresh_token = models.CharField(max_length=1024, unique=True)
-
 
     def __str__(self):
         return f"{self.user.first_name}'s blacklisted token"
@@ -87,7 +91,9 @@ class BlacklistedToken(BaseModel):
     def blacklist_token(cls, user, access, refresh):
         """Blacklists a refresh token."""
         if not cls.is_token_blacklisted(access, refresh):
-            cls.objects.get_or_create(user=user, access_token=access, refresh_token=refresh)
+            cls.objects.get_or_create(
+                user=user, access_token=access, refresh_token=refresh
+            )
 
     @classmethod
     def is_token_blacklisted(cls, access, refresh):
@@ -108,5 +114,5 @@ class BlacklistedToken(BaseModel):
 
     class Meta:
         db_table = "blacklisted_token"
-        verbose_name = ('Blacklisted Token')
-        verbose_name_plural = ('Blacklisted Tokens')
+        verbose_name = "Blacklisted Token"
+        verbose_name_plural = "Blacklisted Tokens"

@@ -9,127 +9,131 @@ load_dotenv(find_dotenv())
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'g$3$tamn)*wcu@o05(u2bs^a3725_0orx97q2rdlmanwhmoc!@'
+SECRET_KEY = "g$3$tamn)*wcu@o05(u2bs^a3725_0orx97q2rdlmanwhmoc!@"
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = os.environ.get("DEBUG", "False") == "True"
 
-ALLOWED_HOSTS = ['*'] if DEBUG else [
-    'cau-hackathon-admin.falconsoft.uz',
-    'cau-hackathon.falconsoft.uz',
-]
+ALLOWED_HOSTS = (
+    ["*"]
+    if DEBUG
+    else [
+        "cau-hackathon-admin.falconsoft.uz",
+        "cau-hackathon.falconsoft.uz",
+    ]
+)
 
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
-    'https://cau-hackathon-admin.falconsoft.uz',
-    'http://cau-hackathon-admin.falconsoft.uz',
-    'https://cau-hackathon.falconsoft.uz',
-    'http://cau-hackathon.falconsoft.uz',
-    'http://localhost:3000',
+    "https://cau-hackathon-admin.falconsoft.uz",
+    "http://cau-hackathon-admin.falconsoft.uz",
+    "https://cau-hackathon.falconsoft.uz",
+    "http://cau-hackathon.falconsoft.uz",
+    "http://localhost:3000",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
-    'https://cau-hackathon-admin.falconsoft.uz',
-    'http://cau-hackathon-admin.falconsoft.uz',
-    'https://cau-hackathon.falconsoft.uz',
-    'http://cau-hackathon.falconsoft.uz',
-    'http://localhost:3000',
+    "https://cau-hackathon-admin.falconsoft.uz",
+    "http://cau-hackathon-admin.falconsoft.uz",
+    "https://cau-hackathon.falconsoft.uz",
+    "http://cau-hackathon.falconsoft.uz",
+    "http://localhost:3000",
 ]
 
 DJANGO_APPS = [
-    'jazzmin',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    "jazzmin",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
 ]
 
 LOCAL_APPS = [
-    'chats',
-    'common',
-    'groceries',
-    'meals',
-    'users',
+    "chats",
+    "common",
+    "groceries",
+    "meals",
+    "users",
 ]
 
 THIRD_PARTY_APPS = [
-    'drf_yasg',
-    'rest_framework',
-    'rest_framework_simplejwt',
-    'modeltranslation',
-    'rosetta',
-    'corsheaders',
+    "drf_yasg",
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "modeltranslation",
+    "rosetta",
+    "corsheaders",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'middlewares.ErrorHandlerMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "middlewares.ErrorHandlerMiddleware",
 ]
 
-ROOT_URLCONF = 'core.urls'
+ROOT_URLCONF = "core.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
         },
     },
 ]
 
-WSGI_APPLICATION = 'core.wsgi.application'
+WSGI_APPLICATION = "core.wsgi.application"
 
 if DEBUG:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': os.environ.get('DB_HOST'),
-            'PORT': os.environ.get('DB_PORT'),
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ.get("DB_NAME"),
+            "USER": os.environ.get("DB_USER"),
+            "PASSWORD": os.environ.get("DB_PASSWORD"),
+            "HOST": os.environ.get("DB_HOST"),
+            "PORT": os.environ.get("DB_PORT"),
         }
     }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
 
@@ -155,7 +159,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "users.User"
 

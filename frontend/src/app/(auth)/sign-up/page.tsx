@@ -69,7 +69,7 @@ const Page = () => {
           allergies: formData.allergies,
         }
         console.log(payload)
-        
+
         // await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register/`, payload);
         // await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register/`, mockData);
 

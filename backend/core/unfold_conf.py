@@ -84,7 +84,7 @@ UNFOLD = {
                         "link": reverse_lazy("admin:auth_group_changelist"),
                     },
                 ],
-            },  
+            },
             # Common
             {
                 "title": _("Common"),
@@ -92,16 +92,15 @@ UNFOLD = {
                 "items": [
                     # {
                     #     "title": _("FAQ"),
-                    #     "icon": "help_center", 
-                    #     "link": reverse_lazy("admin:common_faq_changelist"), 
+                    #     "icon": "help_center",
+                    #     "link": reverse_lazy("admin:common_faq_changelist"),
                     # },
-                    
                     {
                         "title": _("Blacklisted Tokens"),
                         "icon": "engineering",
-                        "link": reverse_lazy("admin:users_blacklistedtoken_changelist")
+                        "link": reverse_lazy("admin:users_blacklistedtoken_changelist"),
                     }
-                ]
+                ],
             },
         ],
     },
