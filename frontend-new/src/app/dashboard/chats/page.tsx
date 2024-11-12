@@ -112,16 +112,16 @@ const Page = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="px-6 py-4 pb-8 flex items-center space-x-2 bg-slate-50 border-t border-t-indigo-300 rounded-t-3xl">
+      <div className="px-6 py-4 pb-8 flex items-center space-x-2 bg-slate-50 border-t border-t-indigo-300">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="flex-grow outline-none border-none ring-0 focus:outline-none focus:border-none focus:ring-0 bg-transparent"
-          placeholder="Ask any nutrition or health related question..."
+          placeholder="Ask a nutrition related question..."
         />
         <Button
           onClick={handleSendMessage}
-          className="bg-custom hover:bg-indigo-800 text-white rounded-lg h-10 w-10"
+          className="bg-custom hover:bg-indigo-800 text-white rounded-full h-10 w-10"
         >
           <SendHorizontal />
         </Button>
