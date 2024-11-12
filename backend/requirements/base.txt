@@ -24,3 +24,15 @@ redis==5.1.1
 django-redis==5.4.0
 celery==5.4.0 
 requests==2.32.3
+
+# Other
+setuptools==75.1.0
+
+# Web server
+gunicorn==23.0.0
+
+# Logger
+loguru==0.7.2
+
+# Bot
+aiogram==3.13.1

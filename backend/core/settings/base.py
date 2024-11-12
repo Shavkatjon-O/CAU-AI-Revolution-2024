@@ -10,7 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+import core.utils
 import environ
+
 from pathlib import Path
 from django.urls import reverse_lazy
 from core.unfold_conf import *
@@ -49,6 +51,7 @@ DJANGO_APPS = [
 
 CUSTOM_APPS = [
     "apps.users",
+    "apps.common",
 ]
 
 THIRD_PARTY_APPS = [
@@ -102,6 +105,7 @@ SPECTACULAR_SETTINGS = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -204,6 +208,21 @@ AUTH_USER_MODEL = "users.User"
 CORS_ORIGIN_ALLOW_ALL = True # ?
 CORS_ALLOW_CREDENTIALS = True # ?
 
+# Email
+EMAIL_HOST = env.str("EMAIL_HOST")
+EMAIL_HOST_USER = env.str("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
+EMAIL_PORT = env.str("EMAIL_PORT")
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
+# Celery
+CELERY_BROKER_URL = 'redis://localhost:6379/1'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/1'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
 
 # CONSTANTS
 ENCRYPTION_KEY=env.str('ENCRYPTION_KEY').encode()
@@ -215,3 +234,9 @@ JWT_REFRESH_TOKEN_SECRET=env.str('JWT_REFRESH_TOKEN_SECRET')
 REFRESH_TOKEN_EXPIRATION_DAYS=env.str('REFRESH_TOKEN_EXPIRATION_DAYS')
 ACCESS_TOKEN_EXPIRATION_MINUTES=env.str('ACCESS_TOKEN_EXPIRATION_MINUTES')
 JWT_REFRESH_TOKEN_EXPIRATION = env.int('REFRESH_TOKEN_EXPIRATION_DAYS') * 24 * 60 * 60  # in seconds
+
+OTP_LIFETIME = env.str("OTP_LIFETIME")
+
+REDIS_HOST=env.str("REDIS_HOST")
+REDIS_PORT=env.str("REDIS_PORT")
+REDIS_DB=env.str("REDIS_DB")
