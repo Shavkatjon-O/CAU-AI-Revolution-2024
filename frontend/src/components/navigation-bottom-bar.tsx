@@ -18,12 +18,12 @@ const NavigationBottomBar = () => {
     { href: "/dashboard", label: "Home", icon: House },
     { href: "/dashboard/meal-plans", label: "Meal plans", icon: CalendarCheck },
     { href: "/dashboard/chat", label: "AI Assistant", icon: Sparkles },
-    { href: "/dashboard/groceries", label: "Shopping Lists", icon: ShoppingCart },
+    { href: "/dashboard/groceries", label: "Groceries", icon: ShoppingCart },
     { href: "/dashboard/profile", label: "Profile", icon: User },
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 h-20 max-w-lg mx-auto border-t border-t-slate-300 rounded-t-3xl flex items-center bg-white z-50">
+    <div className="fixed bottom-0 left-0 right-0 h-20 max-w-lg mx-auto border-t border-x border-t-slate-300 rounded-t-3xl flex items-center bg-white z-50">
       {menuItems.map((item) => {
         const Icon = item.icon;
         const isActive = currentRoute === item.href;
