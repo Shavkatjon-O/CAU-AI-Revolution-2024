@@ -87,9 +87,6 @@ const Page = () => {
                     Sign Out
                   </Link>
                 </Button>
-                <Button className="h-12 bg-custom hover:bg-custom">
-                  Update Profile
-                </Button>
               </div>
 
               <div className="pt-4 bg-slate-50 border-t border-t-indigo-200">

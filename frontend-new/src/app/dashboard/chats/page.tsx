@@ -16,6 +16,20 @@ const Page = () => {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    const timestamp = new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    setMessages([
+      {
+        text: "Welcome! I am your AI Nutritionist. Feel free to ask me any nutrition-related questions.",
+        sender: "AI Assistant",
+        timestamp,
+      },
+    ]);
+  }, []);
+
   const handleSendMessage = async () => {
     if (input.trim()) {
       const timestamp = new Date().toLocaleTimeString([], {

@@ -31,7 +31,7 @@ const NavigationBottomBar = () => {
         return (
           <Link key={item.href} href={item.href} className="w-1/5 h-full flex justify-center items-center">
             <div className="flex flex-col items-center">
-              <div className={`p-4 rounded-full ${isActive ? 'bg-custom' : ''}`}>
+              <div className={`p-4 rounded-full ${isActive ? 'bg-custom shadow-md' : ''}`}>
                 <Icon className={isActive ? "text-white" : "text-slate-600"} />
               </div>
             </div>
