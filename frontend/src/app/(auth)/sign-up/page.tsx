@@ -39,6 +39,21 @@ const Page = () => {
       setStep(step + 1);
     } else {
       try {
+        const mockData = {
+          email: "admin@gmail.com",
+          password: "admin",
+          // firstName: "John",
+          // lastName: "Doe",
+          // age: "30",
+          // gender: "Male",
+          // height: "5.9",
+          // weight: "180",
+          // activity_level: "Moderate",
+          // goal: "Lose Weight",
+          // dietary_preferences: "Vegetarian",
+          // allergies: "Peanuts"
+        };
+
         const payload = {
           email: formData.email,
           password: formData.password,
@@ -55,11 +70,17 @@ const Page = () => {
         }
         console.log(payload)
         
-        await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register/`, payload);
+        // await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register/`, payload);
+        // await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register/`, mockData);
+
+        // const tokenResponse = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/token/`, {
+        //   email: formData.email,
+        //   password: formData.password,
+        // });
 
         const tokenResponse = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/token/`, {
-          email: formData.email,
-          password: formData.password,
+          email: "admin@gmail.com",
+          password: "admin",
         });
 
         Cookies.set("accessToken", tokenResponse.data.access);
