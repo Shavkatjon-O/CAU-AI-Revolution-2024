@@ -62,5 +62,20 @@ services:
       - backend
     restart: always
 
+  frontend2:
+    container_name: cau_hackathon_frontend_new
+    hostname: frontend-new
+    build:
+      context: frontend-new
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+    ports:
+      - 3031:3000
+    depends_on:
+      - postgres
+      - backend
+    restart: always
+
 volumes:
   postgres_data:
