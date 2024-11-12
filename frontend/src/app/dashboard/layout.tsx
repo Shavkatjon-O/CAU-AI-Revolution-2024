@@ -1,7 +1,9 @@
-import React from 'react'
+"use client";
 
-import NavigationTopBar from "@/components/navigation-bottom-bar";
-import NavigationBottomBar from "@/components/navigation-top-bar";
+import React from 'react'
+import NavigationBottomBar from "@/components/navigation-bottom-bar";
+import NavigationTopBar from "@/components/navigation-top-bar";
+import Auth from '@/components/auth';
 
 interface LayoutProps {
   children: React.ReactNode
@@ -17,4 +19,4 @@ const Layout = ({ children }: LayoutProps) => {
   )
 }
 
-export default Layout;
+export default Auth(Layout);
