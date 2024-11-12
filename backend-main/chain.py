@@ -11,7 +11,7 @@ from langchain_community.document_loaders import TextLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough
+from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 
 from django.conf import settings
 
@@ -59,6 +59,9 @@ User Information:
 - Lifestyle details: {lifestyle_details}
 
 Please create a meal plan that aligns with the user's preferences and health goals, provide recommendations for healthy habits, and suggest any improvements or adjustments they could make to their diet and lifestyle.
+
+Give me 3-4 sentence answer only.
+
 """
 
 # -------------------------------------------------------------------------- #
@@ -85,13 +88,13 @@ query = {
 }
 
 def get_chain(user_info):
-    rag_prompt = generate_rag_prompt(user_info)
+    rag_prompt = RunnableLambda(lambda user_info: generate_rag_prompt(user_info))
 
-    chain = query | rag_prompt | llm | output_parser
+    chain = query["question"] | rag_prompt | llm | output_parser
 
     return chain
 
 chain = get_chain(user_info)
 
-result = chain.invoke()
+result = chain.invoke(user_info)
 print(result)
