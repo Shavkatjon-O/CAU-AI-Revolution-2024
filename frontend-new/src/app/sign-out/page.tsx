@@ -10,8 +10,8 @@ const Page = () => {
   const router = useRouter();
 
   useEffect(() => {
-    Cookies.remove("access_token");
-    Cookies.remove("refresh_token");
+    Cookies.remove("accessToken");
+    Cookies.remove("refreshToken");
 
     router.push("/sign-in");
   }, [router]);
