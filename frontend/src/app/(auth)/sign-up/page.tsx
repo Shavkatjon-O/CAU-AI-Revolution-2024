@@ -49,11 +49,11 @@ const Page = () => {
   };
 
   return (
-    <div className='px-2'>
+    <div className='px-4'>
       <FormProvider {...methods}>
-        <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-lg shadow-2xl border border-custom">
+        <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-3xl shadow-2xl border border-custom">
           <div className='flex items-center justify-center pb-6 font-semibold text-custom'>
-            <span className='text-2xl'>SafeBite</span>
+            <span className='text-3xl'>SafeBite</span>
           </div>
 
           <Image src="/img/sign-up-image.svg" alt="Image" width={256} height={256} className="mx-auto w-full mb-6 shadow-md rounded-3xl" />
@@ -69,7 +69,7 @@ const Page = () => {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Enter your email"
+                  placeholder="Email"
                   className="pl-10 h-12 focus:border-custom"
                 />
                 <Mail size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -82,7 +82,7 @@ const Page = () => {
                   type="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="Enter your password"
+                  placeholder="Password"
                   className="pl-10 h-12 focus:border-custom"
                 />
                 <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -94,7 +94,7 @@ const Page = () => {
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleChange}
-                  placeholder="First Name"
+                  placeholder="First name"
                   className="pl-10 h-12 focus:border-custom"
                 />
                 <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -106,7 +106,7 @@ const Page = () => {
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleChange}
-                  placeholder="Last Name"
+                  placeholder="Last name"
                   className="pl-10 h-12 focus:border-custom"
                 />
                 <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
