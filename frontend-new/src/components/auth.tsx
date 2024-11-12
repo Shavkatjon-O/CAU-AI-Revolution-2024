@@ -17,7 +17,8 @@ const Auth = <P extends object>(WrappedComponent: ComponentType<P>) => {
         try {
           const refreshToken = Cookies.get("refreshToken");
           if (!refreshToken) {
-            router.push("/sign-in");
+            setIsAuthenticated(false);
+            setIsLoaded(true);
             return;
           }
           const response = await axios.post(
@@ -27,28 +28,40 @@ const Auth = <P extends object>(WrappedComponent: ComponentType<P>) => {
           if (response.status === 200) {
             setIsAuthenticated(true);
           } else {
-            router.push("/sign-in");
+            setIsAuthenticated(false);
           }
         } catch (error) {
           console.log("Authentication error:", error);
-          router.push("/sign-in");
+          setIsAuthenticated(false);
         } finally {
           setIsLoaded(true);
         }
       };
 
       checkAuth();
-    }, [router]);
+    }, []);
 
-    if (isLoaded) {
-      return isAuthenticated ? <WrappedComponent {...props} /> : null;
+    useEffect(() => {
+      if (isLoaded
+          && isAuthenticated
+          && (
+              window.location.pathname === "/sign-in"
+              || window.location.pathname === "/sign-up"
+            )
+      ) {
+        router.push("/dashboard");
+      }
+    }, [isLoaded, isAuthenticated, router]);
+
+    if (!isLoaded) {
+      return (
+        <div className="h-screen flex justify-center items-center">
+          <Loader2 className="animate-spin text-custom" />
+        </div>
+      );
     }
 
-    return (
-      <div className="h-screen flex justify-center items-center">
-        <Loader2 className="animate-spin text-custom" />
-      </div>
-    );
+    return isAuthenticated ? <WrappedComponent {...props} /> : null;
   };
 
   return AuthComponent;

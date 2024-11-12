@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
 import Link from "next/link";
+import Auth from "@/components/auth";
 
 const FormSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -172,4 +173,4 @@ const Page = () => {
   );
 }
 
-export default Page;
+export default Auth(Page);
