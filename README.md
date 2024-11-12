@@ -4,3 +4,6 @@
 ```
 make nginx-setup
 ```
+```
+make deploy
+```
