@@ -58,6 +58,16 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "email",
+            "first_name",
+            "last_name",
+            "age",
+            "gender",
+            "height",
+            "weight",
+            "activity_level",
+            "goal",
+            "dietary_preferences",
+            "allergies",
         )
 
 

@@ -1,72 +1,87 @@
-"use client";
+"use client"
 
-import { useState, useEffect } from "react";
 import coreApi from "@/lib/coreApi";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { User } from "lucide-react";
 
-interface UserProfileType {
+interface ProfileType {
   id: number;
   email: string;
+  first_name: string;
+  last_name: string;
+  age: number;
+  gender: string;
+  height: number;
+  weight: number;
+  activity_level: string;
+  goal: string;
+  dietary_preferences: string;
+  allergies: string;
 }
 
-const getUserProfile = async () => {
-  const { data } = await coreApi.get<UserProfileType>("/users/profile/");
-  return data;
-};
+const getProfile = async () => {
+  const response = await coreApi.get("/users/profile/");
+  return response.data;
+}
 
 const Page = () => {
-  const [userProfile, setUserProfile] = useState<UserProfileType | null>(null);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [profile, setProfile] = useState<ProfileType | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      const profile = await getUserProfile();
-      setUserProfile(profile);
-    };
-
-    fetchUserProfile();
+    getProfile()
+      .then((data) => {
+        setProfile(data);
+        setIsLoaded(true);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setIsLoaded(true);
+      });
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full overflow-y-scroll px-6">
-      <div className="w-full max-w-xl p-8 bg-white rounded-xl">
-        <h1 className="text-3xl font-semibold text-start text-custom mb-6">Profile</h1>
+    <div className="pt-16 pb-20 size-full">
+      <div className="">
+        {
+          isLoaded ? (
+          profile ? (
+            <>
+              <div className="py-12 flex flex-col items-center">
+                <div className="bg-indigo-100 text-slate-500 p-6 rounded-full">
+                  <User className="w-20 h-20" />
+                </div>
+                <div className="mt-2 flex flex-col items-center">
+                  <span className="text-lg">John Doe</span>
+                  <span className="text-slate-600">{profile.email}</span>
+                </div>
+              </div>
 
-        {userProfile ? (
-          <div className="space-y-6">
-            {/* Profile Section */}
-            <div className="p-6 bg-gray-50 rounded-lg">
-              <p className="text- font-medium text-gray-800">Email: {userProfile.email}</p>
-            </div>
-
-            {/* Additional User Information */}
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h2 className="text-lg font-medium text-gray-700">User Information</h2>
-              <ul className="mt-2 text-gray-600">
-                <li><strong>Account Created:</strong> January 1, 2023</li>
-                <li><strong>Status:</strong> Active</li>
-                <li><strong>Meal Preferences:</strong> Vegetarian, Low-Carb</li>
-                <li><strong>Dietary Goals:</strong> Maintain weight, Increase energy</li>
-                <li><strong>Fitness Level:</strong> Intermediate</li>
-                <li><strong>Preferred Meal Types:</strong> Quick & Easy, High-Protein, Gluten-Free</li>
-              </ul>
-            </div>
-
-            {/* Action Buttons using ShadCN */}
-            <div className="flex flex-col items-center space-y-4 mt-8">
-              <Button className="w-full bg-custom rounded-lg hover:bg-indigo-700 h-12 transition duration-200">
-                Edit Profile
-              </Button>
-              <Button variant="outline" className="w-full h-12 border-red-500 border-2 text-red-500 hover:bg-red-100">
-                Logout
-              </Button>
-            </div>
-          </div>
+              <div className="p-4 bg-slate-100">
+                <h1 className="text-3xl font-bold mb-4">Profile</h1>
+                <p className="text-lg mb-2">Email: {profile.email}</p>
+                <p className="text-lg mb-2">First Name: {profile.first_name}</p>
+                <p className="text-lg mb-2">Last Name: {profile.last_name}</p>
+                <p className="text-lg mb-2">Age: {profile.age}</p>
+                <p className="text-lg mb-2">Gender: {profile.gender}</p>
+                <p className="text-lg mb-2">Height: {profile.height}</p>
+                <p className="text-lg mb-2">Weight: {profile.weight}</p>
+                <p className="text-lg mb-2">Activity Level: {profile.activity_level}</p>
+                <p className="text-lg mb-2">Goal: {profile.goal}</p>
+                <p className="text-lg mb-2">Dietary Preferences: {profile.dietary_preferences}</p>
+                <p className="text-lg mb-2">Allergies: {profile.allergies}</p>
+              </div>
+            </>
+          ) : (
+            <p className="text-lg">No profile data available.</p>
+          )
         ) : (
-          <p className="text-lg text-gray-600">Loading your profile...</p>
-        )}
+          <p className="text-lg">Loading...</p>
+        )
+        }
       </div>
     </div>
-  );
-};
-
+  )
+}
 export default Page;
