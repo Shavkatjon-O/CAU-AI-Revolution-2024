@@ -1,14 +1,16 @@
-import Link from "next/link";
+"use client";
 
-import { Button } from "@/components/ui/button";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Page = () => {
-  return (
-    <div className="h-screen flex justify-center items-center">
-      <Button asChild>
-        <Link href="/sign-up">Sign Up</Link>
-      </Button>
-    </div>
-  )
-}
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push('/dashboard');
+  }, [router]);
+
+  return null;
+};
+
 export default Page;
