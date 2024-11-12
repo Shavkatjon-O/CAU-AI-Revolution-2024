@@ -41,6 +41,11 @@ const Page = () => {
       });
   }, []);
 
+  // Fallback values
+  const getProfileValue = (value: string | number | undefined, fallback: string) => {
+    return value ? value : fallback;
+  };
+
   return (
     <div className="pt-16 pb-20 size-full overflow-y-scroll">
       <div className="">
@@ -51,98 +56,45 @@ const Page = () => {
             </div>
           ) : profile ? (
             <>
-              <div className="py-12 flex flex-col items-center">
+              <div className="py-10 flex flex-col items-center">
                 <div className="bg-indigo-100 text-slate-500 p-6 rounded-full">
                   <User className="w-20 h-20" />
                 </div>
                 <div className="mt-2 flex flex-col items-center">
                   <span className="text-lg">
-                    {profile.first_name && profile.last_name ? `${profile.first_name} ${profile.last_name}` : 'John Doe'}
+                    {profile.first_name && profile.last_name
+                      ? `${profile.first_name} ${profile.last_name}`
+                      : 'John Doe'}
                   </span>
-                  <span className="text-slate-600">{profile.email}</span>
+                  <span className="text-slate-600">{profile.email || 'no-email@example.com'}</span>
                 </div>
               </div>
 
               <div className="p-6 bg-slate-50 border-t border-t-indigo-200">
-                <h1 className="text-2xl font-bold mb-4 text-center">Profile Details</h1>
                 <div className="space-y-4">
-                  <div className="flex items-center text-slate-700">
-                    <div className="bg-indigo-500 p-2 text-white rounded-full mr-4">
-                      <Mail className="size-5" />
+                  {[
+                    { icon: <Mail className="size-4" />, label: "Email", value: profile.email, fallback: 'no-email@example.com' },
+                    { icon: <Info className="size-4" />, label: "First Name", value: profile.first_name, fallback: 'John' },
+                    { icon: <Info className="size-4" />, label: "Last Name", value: profile.last_name, fallback: 'Doe' },
+                    { icon: <Calendar className="size-4" />, label: "Age", value: profile.age, fallback: 'N/A' },
+                    { icon: <User className="size-4" />, label: "Gender", value: profile.gender, fallback: 'Not specified' },
+                    { icon: <Ruler className="size-4" />, label: "Height", value: profile.height, fallback: 'N/A' },
+                    { icon: <Dumbbell className="size-4" />, label: "Weight", value: profile.weight, fallback: 'N/A' },
+                    { icon: <Target className="size-4" />, label: "Activity Level", value: profile.activity_level, fallback: 'Not specified' },
+                    { icon: <Target className="size-4" />, label: "Goal", value: profile.goal, fallback: 'Not specified' },
+                    { icon: <Utensils className="size-4" />, label: "Dietary Preferences", value: profile.dietary_preferences, fallback: 'None' },
+                    { icon: <AlertTriangle className="size-4" />, label: "Allergies", value: profile.allergies, fallback: 'None' },
+                  ].map(({ icon, label, value, fallback }) => (
+                    <div key={label} className="flex items-center border-b border-b-slate-200 pb-3">
+                      <div className="bg-indigo-500 p-2 text-white rounded-full mr-3">
+                        {icon}
+                      </div>
+                      <div className="flex justify-between w-full">
+                        <span className="">{label}</span>
+                        <span className="ml-2">{getProfileValue(value, fallback)}</span>
+                      </div>
                     </div>
-                    <span className="font-semibold">Email:</span>
-                    <span className="ml-2">{profile.email}</span>
-                  </div>
-                  <div className="flex items-center text-slate-700">
-                    <div className="bg-indigo-500 p-2 text-white rounded-full mr-4">
-                      <Info className="size-5"  />
-                    </div>
-                    <span className="font-semibold">First Name:</span>
-                    <span className="ml-2">{profile.first_name}</span>
-                  </div>
-                  <div className="flex items-center text-slate-700">
-                    <div className="bg-indigo-500 p-2 text-white rounded-full mr-4">
-                      <Info className="size-5"  />
-                    </div>
-                    <span className="font-semibold">Last Name:</span>
-                    <span className="ml-2">{profile.last_name}</span>
-                  </div>
-                  <div className="flex items-center text-slate-700">
-                    <div className="bg-indigo-500 p-2 text-white rounded-full mr-4">
-                      <Calendar className="size-5"  />
-                    </div>
-                    <span className="font-semibold">Age:</span>
-                    <span className="ml-2">{profile.age}</span>
-                  </div>
-                  <div className="flex items-center text-slate-700">
-                    <div className="bg-indigo-500 p-2 text-white rounded-full mr-4">
-                      <User className="size-5"  />
-                    </div>
-                    <span className="font-semibold">Gender:</span>
-                    <span className="ml-2">{profile.gender}</span>
-                  </div>
-                  <div className="flex items-center text-slate-700">
-                    <div className="bg-indigo-500 p-2 text-white rounded-full mr-4">
-                      <Ruler className="size-5"  />
-                    </div>
-                    <span className="font-semibold">Height:</span>
-                    <span className="ml-2">{profile.height} cm</span>
-                  </div>
-                  <div className="flex items-center text-slate-700">
-                    <div className="bg-indigo-500 p-2 text-white rounded-full mr-4">
-                      <Dumbbell className="size-5"  />
-                    </div>
-                    <span className="font-semibold">Weight:</span>
-                    <span className="ml-2">{profile.weight} kg</span>
-                  </div>
-                  <div className="flex items-center text-slate-700">
-                    <div className="bg-indigo-500 p-2 text-white rounded-full mr-4">
-                      <Target className="size-5"  />
-                    </div>
-                    <span className="font-semibold">Activity Level:</span>
-                    <span className="ml-2">{profile.activity_level}</span>
-                  </div>
-                  <div className="flex items-center text-slate-700">
-                    <div className="bg-indigo-500 p-2 text-white rounded-full mr-4">
-                      <Target className="size-5"  />
-                    </div>
-                    <span className="font-semibold">Goal:</span>
-                    <span className="ml-2">{profile.goal}</span>
-                  </div>
-                  <div className="flex items-center text-slate-700">
-                    <div className="bg-indigo-500 p-2 text-white rounded-full mr-4">
-                      <Utensils className="size-5"  />
-                    </div>
-                    <span className="font-semibold">Dietary Preferences:</span>
-                    <span className="ml-2">{profile.dietary_preferences}</span>
-                  </div>
-                  <div className="flex items-center text-slate-700">
-                    <div className="bg-indigo-500 p-2 text-white rounded-full mr-4">
-                      <AlertTriangle className="size-5"  />
-                    </div>
-                    <span className="font-semibold">Allergies:</span>
-                    <span className="ml-2">{profile.allergies}</span>
-                  </div>
+                  ))}
                 </div>
               </div>
             </>
