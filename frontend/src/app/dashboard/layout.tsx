@@ -11,7 +11,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="size-full py-20 overflow-y-scroll">
+    <div className="size-full py-20 overflow-y-scroll max-w-lg mx-auto bg-slate-50">
       <NavigationTopBar />
       {children}
       <NavigationBottomBar />

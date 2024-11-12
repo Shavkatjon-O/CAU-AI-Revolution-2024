@@ -88,7 +88,7 @@ const ChatPage = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="px-6 py-4 flex items-center space-x-2 bg-slate-50 border-t border-t-slate-300 rounded-t-3xl shadow-2xl">
+      <div className="px-6 py-4 flex items-center space-x-2 bg-slate-50 border-t border-t-slate-300 rounded-t-3xl">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
