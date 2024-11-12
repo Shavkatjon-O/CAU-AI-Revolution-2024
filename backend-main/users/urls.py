@@ -6,7 +6,7 @@ from rest_framework_simplejwt.views import (
 from django.urls import path
 from .views import (
     UserProfileView,
-    UserRegisterSerializer,
+    UserRegisterView,
 )
 
 urlpatterns = [
@@ -14,5 +14,5 @@ urlpatterns = [
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('token/verify/', TokenVerifyView.as_view(), name='token_verify'),
     path('profile/', UserProfileView.as_view(), name='profile'),
-    path('register/', UserRegisterSerializer.as_view(), name='register'),
+    path('register/', UserRegisterView.as_view(), name='register'),
 ]
