@@ -6,6 +6,8 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, User, Calendar, ArrowRight } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const steps = ['Personal Info', 'Health Info', 'Dietary Preferences'];
 
@@ -24,6 +26,7 @@ const Page = () => {
     activityLevel: '',
     dietaryPreferences: '',
     allergies: '',
+    goal: '',
   });
 
   const handleNext = () => {
@@ -45,6 +48,13 @@ const Page = () => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData({
+      ...formData,
+      [name]: value,
     });
   };
 
@@ -174,6 +184,23 @@ const Page = () => {
           {step === 2 && (
             <>
               <div className="relative">
+                <Select
+                  value={formData.goal}
+                  onValueChange={(value) => handleSelectChange('goal', value)}
+                >
+                  <SelectTrigger className="pl-10 h-12 focus:border-custom">
+                    <SelectValue placeholder="Select Goal" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Weight Loss">Weight Loss</SelectItem>
+                    <SelectItem value="Muscle Gain">Muscle Gain</SelectItem>
+                    <SelectItem value="Maintain">Maintain</SelectItem>
+                  </SelectContent>
+                </Select>
+                <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
+              </div>
+
+              <div className="relative mt-4">
                 <Input
                   id="activityLevel"
                   name="activityLevel"
@@ -228,12 +255,12 @@ const Page = () => {
               {step === steps.length - 1 ? (
                 <>
                   Submit
-                  <ArrowRight className="ml-1" />
+                  <ArrowRight size={20} className="ml-2" />
                 </>
               ) : (
                 <>
                   Next
-                  <ArrowRight className="ml-1" />
+                  <ArrowRight size={20} className="ml-2" />
                 </>
               )}
             </Button>
