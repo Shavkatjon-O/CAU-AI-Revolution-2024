@@ -32,7 +32,7 @@ SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.str("DEBUG")
 
 ALLOWED_HOSTS = ["*"]
-
+CSRF_ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
