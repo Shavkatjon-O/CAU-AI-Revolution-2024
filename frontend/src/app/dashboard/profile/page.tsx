@@ -27,8 +27,8 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full bg-gray-100">
-      <div className="w-full max-w-xl p-8 bg-white shadow-md rounded-xl">
+    <div className="flex flex-col items-center justify-center h-full overflow-y-scroll px-4">
+      <div className="w-full max-w-xl p-8 bg-white rounded-xl">
         <h1 className="text-3xl font-semibold text-start text-custom mb-6">Profile</h1>
 
         {userProfile ? (
@@ -53,7 +53,7 @@ const Page = () => {
 
             {/* Action Buttons using ShadCN */}
             <div className="flex flex-col items-center space-y-4 mt-8">
-              <Button className="w-full bg-custom rounded-lg shadow-md hover:bg-indigo-700 h-12 transition duration-200">
+              <Button className="w-full bg-custom rounded-lg hover:bg-indigo-700 h-12 transition duration-200">
                 Edit Profile
               </Button>
               <Button variant="outline" className="w-full h-12 border-red-500 border-2 text-red-500 hover:bg-red-100">

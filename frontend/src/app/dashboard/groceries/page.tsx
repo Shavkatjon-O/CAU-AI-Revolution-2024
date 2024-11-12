@@ -116,11 +116,11 @@ const Page = () => {
   };
 
   return (
-    <div className="bg-white p-6 h-full overflow-y-scroll">
-      <h1 className="text-custom text-3xl font-semibold mb-6">Shopping Lists</h1>
+    <div className="p-6 h-full overflow-y-scroll">
+      <h1 className="text-custom text-3xl font-semibold px-6 mb-6">Shopping Lists</h1>
 
-      <span className="mb-1">Title</span>
-      <div className="mb-6">
+      <div className="mb-6 bg-white p-6 rounded-lg">
+        <span className="mb-1">Title</span>
         <Input
           className="mb-4 h-12"
           placeholder="Enter shopping list name"
@@ -214,7 +214,7 @@ const Page = () => {
 
       <div className="space-y-4">
         {shoppingLists.map((list) => (
-          <Card key={list.id} className="p-4 shadow-lg">
+          <Card key={list.id} className="p-4 shadow-none border-none">
             <div className="flex justify-between">
               <div>
                 <h2 className="text-xl font-semibold">{list.name}</h2>

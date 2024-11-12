@@ -10,7 +10,6 @@ import Cookies from "js-cookie";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
-import { format } from "date-fns";
 import {
   Select,
   SelectTrigger,
@@ -24,19 +23,19 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormControl
 } from "@/components/ui/form";
 
 type MealPlan = {
   id: string;
   mealName: string;
-  dayOfWeek: string;
-  mealTime: string;
+  mealTime: string; // Time string now
   ingredients: string[];
   priority: string;
 };
 
 const FormSchema = z.object({
-  mealTime: z.string().min(1, "Meal time is required."),
+  mealTime: z.string().min(1, "Meal time is required."), // Time as string
   priority: z.string().min(1, "Priority is required."),
 });
 
@@ -67,8 +66,7 @@ const Page = () => {
     const newMeal: MealPlan = {
       id: Date.now().toString(),
       mealName: newMealName,
-      dayOfWeek: format(new Date(), "EEEE"), 
-      mealTime: data.mealTime,
+      mealTime: data.mealTime, // Store time as a string
       ingredients: [],
       priority: data.priority,
     };
@@ -105,11 +103,12 @@ const Page = () => {
   };
 
   return (
-    <div className="p-4 overflow-y-scroll mx-auto h-full">
-      <h1 className="text-3xl font-semibold text-custom px-6 mb-6">Meal Planner</h1>
+    <div className="py-6 px-6 max-w-4xl mx-auto h-full overflow-y-scroll">
+      <h1 className="text-3xl font-semibold text-custom px-6 pb-6">Meal Planner</h1>
 
       {/* Meal Plan Creation Form */}
-      <div className="bg-white p-6 rounded-lg mb-6 shadow-md">
+      <div className="bg-white p-6 rounded-lg mb-6">
+        <span className="mb-1">Title</span>
         <Input
           className="mb-4 h-12"
           placeholder="Enter meal name (e.g., Breakfast, Lunch, Dinner)"
@@ -118,24 +117,64 @@ const Page = () => {
         />
 
         <FormProvider {...form}>
-          <div className="mb-6">
+          {/* Time Picker for Meal Time */}
+          <div className="mb-4 flex items-center">
             <FormField
               control={form.control}
               name="mealTime"
               render={({ field }) => (
-                <FormItem className="flex flex-col">
+                <FormItem className="flex flex-col w-full">
                   <FormLabel>Meal Time</FormLabel>
-                  <Input
-                    {...field}
-                    className="h-12"
-                    placeholder="Enter meal time (e.g., 8:00 AM)"
-                  />
+                  <FormControl>
+                    <div className="flex items-center space-x-2">
+                      {/* Hour Selector */}
+                      <Select value={field.value?.split(":")[0] || ""} onValueChange={(value) => field.onChange(`${value}:${field.value?.split(":")[1] || "00"}`)}>
+                        <SelectTrigger className="h-12 w-full">
+                          <SelectValue placeholder="Hour" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="00">00</SelectItem>
+                            <SelectItem value="01">01</SelectItem>
+                            <SelectItem value="02">02</SelectItem>
+                            <SelectItem value="03">03</SelectItem>
+                            <SelectItem value="04">04</SelectItem>
+                            <SelectItem value="05">05</SelectItem>
+                            <SelectItem value="06">06</SelectItem>
+                            <SelectItem value="07">07</SelectItem>
+                            <SelectItem value="08">08</SelectItem>
+                            <SelectItem value="09">09</SelectItem>
+                            <SelectItem value="10">10</SelectItem>
+                            <SelectItem value="11">11</SelectItem>
+                            <SelectItem value="12">12</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                      {/* Colon Separator */}
+                      <span className="text-xl">:</span>
+                      {/* Minute Selector */}
+                      <Select value={field.value?.split(":")[1] || "00"} onValueChange={(value) => field.onChange(`${field.value?.split(":")[0] || "00"}:${value}`)}>
+                        <SelectTrigger className="h-12 w-full">
+                          <SelectValue placeholder="Min" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="00">00</SelectItem>
+                            <SelectItem value="15">15</SelectItem>
+                            <SelectItem value="30">30</SelectItem>
+                            <SelectItem value="45">45</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </FormControl>
                 </FormItem>
               )}
             />
           </div>
 
-          <div className="mb-6">
+          {/* Priority Selector */}
+          <div className="mb-4">
             <FormField
               control={form.control}
               name="priority"
@@ -165,7 +204,7 @@ const Page = () => {
 
           <Button
             onClick={() => createMealPlan(form.getValues())}
-            className="bg-blue-600 hover:bg-blue-700 text-white w-full h-12"
+            className="bg-custom hover:bg-indigo-700 text-white w-full h-12"
           >
             <PlusCircle className="mr-1" />
             Create Meal Plan
@@ -176,29 +215,24 @@ const Page = () => {
       {/* Meal Plans Display */}
       <div className="space-y-6">
         {mealPlans.map((meal) => (
-          <Card key={meal.id} className="p-6 bg-white rounded-lg shadow-md">
+          <Card key={meal.id} className="p-6 bg-white rounded-lg border-none shadow-none">
             <div className="flex justify-between items-start">
               <div>
-                <h2 className="text-xl font-semibold">{meal.mealName} ({meal.dayOfWeek})</h2>
+                <h2 className="text-xl font-semibold">{meal.mealName}</h2>
                 <p className="text-sm text-gray-600">
                   Time: {meal.mealTime} | Priority: {meal.priority}
                 </p>
                 <div className="mt-4">
                   <h3 className="text-lg">Ingredients</h3>
-                  <div className="grid grid-cols-2 gap-3 mt-2">
+                  <ul className="list-disc pl-6">
                     {meal.ingredients.length > 0 ? (
                       meal.ingredients.map((ingredient, idx) => (
-                        <div
-                          key={idx}
-                          className="bg-gray-100 p-3 rounded-md shadow-sm text-sm text-gray-700 flex items-center justify-between"
-                        >
-                          <span>{ingredient}</span>
-                        </div>
+                        <li key={idx} className="text-sm">{ingredient}</li>
                       ))
                     ) : (
-                      <p className="text-sm text-gray-500">No ingredients yet</p>
+                      <li className="text-sm text-gray-500">No ingredients yet</li>
                     )}
-                  </div>
+                  </ul>
                 </div>
               </div>
               <Button
@@ -210,7 +244,6 @@ const Page = () => {
               </Button>
             </div>
 
-            {/* Add Ingredient Section */}
             <div className="mt-4">
               <Textarea
                 className="mb-4"
@@ -220,7 +253,7 @@ const Page = () => {
               />
               <Button
                 onClick={() => addIngredientToMeal(meal.id)}
-                className="bg-blue-600 hover:bg-blue-700 text-white w-full h-12"
+                className="bg-custom hover:bg-indigo-700 text-white w-full h-12"
               >
                 <CheckCircle className="mr-1" />
                 Add Ingredient
