@@ -22,7 +22,7 @@ const NavigationMenu = () => {
   ];
 
   return (
-    <div className="fixed z-50 bottom-0 left-0 right-0 h-20 border-t border-t-gray-300 rounded-t-3xl flex items-center bg-white shadow-xl">
+    <div className="fixed z-50 bottom-0 left-0 right-0 h-20 border-t border-t-slate-300 rounded-t-3xl flex items-center bg-white shadow-xl">
       {menuItems.map((item) => {
         const Icon = item.icon;
         const isActive = currentRoute === item.href;

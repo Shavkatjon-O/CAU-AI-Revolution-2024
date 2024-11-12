@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 
 import NavigationMenu from "@/components/navigation-menu";
+import TopBar from "@/components/top-bar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,6 +32,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen pb-16`}
       >
         <div className="size-full overflow-y-scroll">
+          <TopBar />
           {children}
           <NavigationMenu />
         </div>
