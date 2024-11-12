@@ -10,15 +10,15 @@ import {
   User,
 } from "lucide-react";
 
-const NavigationMenu = () => {
+const NavigationBottomBar = () => {
   const currentRoute = usePathname();
 
   const menuItems = [
-    { href: "/", label: "Home", icon: House },
-    { href: "/meal-plans", label: "Meal plans", icon: CalendarCheck },
-    { href: "/chat", label: "Chat", icon: MessageSquareText },
-    { href: "/groceries", label: "Groceries", icon: ShoppingCart },
-    { href: "/profile", label: "Profile", icon: User },
+    { href: "/dashboard", label: "Home", icon: House },
+    { href: "/dashboard/meal-plans", label: "Meal plans", icon: CalendarCheck },
+    { href: "/dashboard/chat", label: "Chat", icon: MessageSquareText },
+    { href: "/dashboard/groceries", label: "Groceries", icon: ShoppingCart },
+    { href: "/dashboard/profile", label: "Profile", icon: User },
   ];
 
   return (
@@ -42,4 +42,4 @@ const NavigationMenu = () => {
   );
 };
 
-export default NavigationMenu;
+export default NavigationBottomBar;
