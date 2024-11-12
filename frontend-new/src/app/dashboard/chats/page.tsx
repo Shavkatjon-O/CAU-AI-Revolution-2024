@@ -79,7 +79,7 @@ const Page = () => {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-full pb-16">
+    <div className="flex flex-col h-full pb-16 pt-20">
       <div className="flex-grow p-4 overflow-y-auto gap-y-4 flex flex-col">
         {messages.map((message, index) => (
           <div
@@ -112,12 +112,12 @@ const Page = () => {
         <div ref={messagesEndRef} />
       </div>
 
-      <div className="px-6 py-4 pb-8 flex items-center space-x-2 bg-slate-50 border-t border-x border-t-indigo-400 border-x-indigo-400 rounded-t-3xl">
+      <div className="px-6 py-4 pb-8 flex items-center space-x-2 bg-slate-50 border-t border-t-indigo-300 rounded-t-3xl">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="flex-grow outline-none border-none ring-0 focus:outline-none focus:border-none focus:ring-0 bg-transparent"
-          placeholder="Ask a nutrition-related question..."
+          placeholder="Ask any nutrition or health related question..."
         />
         <Button
           onClick={handleSendMessage}

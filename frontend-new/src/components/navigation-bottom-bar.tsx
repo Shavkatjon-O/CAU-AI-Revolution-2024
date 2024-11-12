@@ -23,7 +23,7 @@ const NavigationBottomBar = () => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 h-20 max-w-lg mx-auto border-t border-x bg-white
-                  border-t-indigo-400 border-x-indigo-400 rounded-t-3xl flex items-center bg-slate-white z-50">
+                  border-t-indigo-300 border-x-indigo-200 rounded-t-3xl flex items-center bg-slate-white z-50">
       {menuItems.map((item) => {
         const Icon = item.icon;
         const isActive = currentRoute === item.href;
