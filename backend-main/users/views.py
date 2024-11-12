@@ -18,4 +18,15 @@ class UserProfileView(generics.RetrieveAPIView):
         return self.request.user
 
 
-__all__ = ("UserProfileView",)
+from .serializers import UserSignUpSerializer
+
+
+class UserSignUpView(generics.CreateAPIView):
+    serializer_class = UserSignUpSerializer
+
+
+__all__ = (
+    "UserProfileView",
+    "UserRegisterView",
+    "UserSignUpView",
+)

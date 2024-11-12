@@ -61,7 +61,21 @@ class UserProfileSerializer(serializers.ModelSerializer):
         )
 
 
+class UserSignUpSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+    password = serializers.CharField(write_only=True, min_length=8)
+
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "email",
+            "password",
+        )
+
+
 __all__ = (
     "UserRegisterSerializer",
     "UserProfileSerializer",
+    "UserSignUpSerializer",
 )

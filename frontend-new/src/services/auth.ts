@@ -21,6 +21,20 @@ const signIn = async (email: string, password: string) => {
   }
 }
 
+const signUp = async (email: string, password: string) => {
+  const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/sign-up/`, {
+    email: email,
+    password: password
+  });
+
+  if (response.status === 201) {
+    return { success: true, message: "Sign up successful" };
+  } else {
+    return { success: false, message: "Sign up failed" };
+  }
+}
+
 export {
   signIn,
+  signUp,
 }
