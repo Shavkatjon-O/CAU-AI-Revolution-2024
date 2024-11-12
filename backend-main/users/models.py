@@ -1,3 +1,5 @@
+from typing import Iterable
+
 from common.models import BaseModel
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -97,3 +99,8 @@ class User(AbstractUser, BaseModel):
             "Goal": self.goal,
             "Suggested Calories": self.suggested_calories(),
         }
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.set_password(self.password)
+        super().save(*args, **kwargs)
