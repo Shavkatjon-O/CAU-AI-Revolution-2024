@@ -17,6 +17,7 @@ import { signIn } from '@/services/auth';
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { Loader2 } from "lucide-react";
 
 const FormSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -27,6 +28,7 @@ const Page = () => {
   const router = useRouter();
 
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -37,6 +39,7 @@ const Page = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+    setIsSubmitting(true);
     ////////////////// Authentication Logic //////////////////
     try {
       const response = await signIn(data.email, data.password);
@@ -54,6 +57,8 @@ const Page = () => {
       console.log("Error during sign-in:", error);
 
       setMessage("An error occurred during sign-in.");
+    } finally {
+      setIsSubmitting(false);
     }
     //////////////////////////////////////////////////////////
   };
@@ -119,10 +124,14 @@ const Page = () => {
           <Button
             type="submit"
             className="w-full h-12 bg-custom hover:bg-indigo-800 font-semibold"
+            disabled={isSubmitting}
           >
-            Sign In
+            {isSubmitting ? (
+              <Loader2 className="animate-spin text-white" />
+            ) : (
+              "Sign In"
+            )}
           </Button>
-
         </form>
       </Form>
     </div>
