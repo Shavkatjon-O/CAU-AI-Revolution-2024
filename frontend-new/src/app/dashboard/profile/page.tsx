@@ -70,28 +70,28 @@ const Page = () => {
                 </div>
               </div>
 
-              <div className="p-6 bg-slate-50 border-t border-t-indigo-200">
+              <div className="pt-4 bg-slate-50 border-t border-t-indigo-200">
                 <div className="space-y-4">
                   {[
                     { icon: <Mail className="size-4" />, label: "Email", value: profile.email, fallback: 'no-email@example.com' },
-                    { icon: <Info className="size-4" />, label: "First Name", value: profile.first_name, fallback: 'John' },
-                    { icon: <Info className="size-4" />, label: "Last Name", value: profile.last_name, fallback: 'Doe' },
+                    { icon: <Info className="size-4" />, label: "First name", value: profile.first_name, fallback: 'John' },
+                    { icon: <Info className="size-4" />, label: "Last name", value: profile.last_name, fallback: 'Doe' },
                     { icon: <Calendar className="size-4" />, label: "Age", value: profile.age, fallback: 'N/A' },
                     { icon: <User className="size-4" />, label: "Gender", value: profile.gender, fallback: 'Not specified' },
                     { icon: <Ruler className="size-4" />, label: "Height", value: profile.height, fallback: 'N/A' },
                     { icon: <Dumbbell className="size-4" />, label: "Weight", value: profile.weight, fallback: 'N/A' },
-                    { icon: <Target className="size-4" />, label: "Activity Level", value: profile.activity_level, fallback: 'Not specified' },
+                    { icon: <Target className="size-4" />, label: "Activity level", value: profile.activity_level, fallback: 'Not specified' },
                     { icon: <Target className="size-4" />, label: "Goal", value: profile.goal, fallback: 'Not specified' },
-                    { icon: <Utensils className="size-4" />, label: "Dietary Preferences", value: profile.dietary_preferences, fallback: 'None' },
+                    { icon: <Utensils className="size-4" />, label: "Dietary preferences", value: profile.dietary_preferences, fallback: 'None' },
                     { icon: <AlertTriangle className="size-4" />, label: "Allergies", value: profile.allergies, fallback: 'None' },
                   ].map(({ icon, label, value, fallback }) => (
-                    <div key={label} className="flex items-center border-b border-b-slate-200 pb-3">
+                    <div key={label} className="px-6 flex items-center border-b border-b-slate-200 pb-3">
                       <div className="bg-indigo-500 p-2 text-white rounded-full mr-3">
                         {icon}
                       </div>
-                      <div className="flex justify-between w-full">
-                        <span className="">{label}</span>
-                        <span className="ml-2">{getProfileValue(value, fallback)}</span>
+                      <div className="flex justify-between items-center w-full">
+                        <span className="text-slate-700">{label}</span>
+                        <span className="text-slate-700">{getProfileValue(value, fallback)}</span>
                       </div>
                     </div>
                   ))}
