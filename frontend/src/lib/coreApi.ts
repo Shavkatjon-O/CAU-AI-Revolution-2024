@@ -47,7 +47,7 @@ coreApi.interceptors.response.use(
 
         return coreApi(config);
       } catch (refreshError) {
-        console.error('Refresh token error:', refreshError);
+        console.log('Refresh token error:', refreshError);
 
         window.location.href = '/sign-in';
         

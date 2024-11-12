@@ -68,7 +68,7 @@ const Page = () => {
 
         router.push('/dashboard');
       } catch (error) {
-        console.error("Error during sign-up:", error);
+        console.log("Error during sign-up:", error);
         alert('Registration failed. Please try again.');
       }
     }
