@@ -35,7 +35,7 @@ const Page = () => {
   };
 
   return (
-    <div className="px-4">
+    <div className="size-full px-4">
       <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-3xl shadow-2xl border">
         <div className="flex items-center justify-center pb-6 font-semibold text-custom">
           <span className="text-3xl">SafeBite</span>

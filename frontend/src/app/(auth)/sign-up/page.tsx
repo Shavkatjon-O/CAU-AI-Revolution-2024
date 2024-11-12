@@ -3,14 +3,20 @@
 import Image from 'next/image';
 import { useForm, FormProvider } from 'react-hook-form';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Mail, User, Calendar, ArrowRight } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
+import { Mail, User, Calendar } from 'lucide-react';
+import Link from 'next/link';
+
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const steps = ['Personal Info', 'Health Info', 'Dietary Preferences'];
 
 const Page = () => {
+  const router = useRouter();
   const methods = useForm(); // Initialize react-hook-form
   const [step, setStep] = useState(0);
   const [formData, setFormData] = useState({
@@ -28,12 +34,39 @@ const Page = () => {
     goal: '',
   });
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (step < steps.length - 1) {
       setStep(step + 1);
     } else {
-      // Handle form submission or final action
-      alert('Sign-up complete!');
+      try {
+        await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register/`, {
+          email: formData.email,
+          password: formData.password,
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          age: formData.age,
+          gender: formData.gender,
+          height: formData.height,
+          weight: formData.weight,
+          activity_level: formData.activityLevel,
+          dietary_preferences: formData.dietaryPreferences,
+          allergies: formData.allergies,
+          goal: formData.goal,
+        });
+
+        const tokenResponse = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/token/`, {
+          email: formData.email,
+          password: formData.password,
+        });
+
+        Cookies.set("accessToken", tokenResponse.data.access);
+        Cookies.set("refreshToken", tokenResponse.data.refresh);
+
+        router.push('/dashboard');
+      } catch (error) {
+        console.error("Error during sign-up:", error);
+        alert('Registration failed. Please try again.');
+      }
     }
   };
 
@@ -230,7 +263,7 @@ const Page = () => {
                   name="dietaryPreferences"
                   value={formData.dietaryPreferences}
                   onChange={handleChange}
-                  placeholder="Dietary Preferences (e.g., vegan, keto)"
+                  placeholder="Dietary Preferences"
                   className="pl-10 h-12 focus:border-custom"
                 />
                 <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -250,16 +283,19 @@ const Page = () => {
             </>
           )}
 
-          <div className="mt-6 flex justify-between">
+          <div className="mt-6 flex justify-between gap-4">
             {step > 0 && (
-              <Button variant="secondary" onClick={handlePrevious} className="h-12">
+              <Button variant="secondary" onClick={handlePrevious} className="h-12 w-full">
                 Back
               </Button>
             )}
-            <Button onClick={handleNext} className="h-12 bg-custom hover:bg-indigo-700">
-              {step < steps.length - 1 ? 'Next' : 'Finish'}
-              {step < steps.length - 1 && <ArrowRight className="ml-2" />}
+            <Button onClick={handleNext} className="h-12 bg-custom hover:bg-indigo-700 w-full font-semibold">
+              {step === steps.length - 1 ? 'Submit' : 'Next'}
             </Button>
+          </div>
+
+          <div className="mt-6 text-center">
+            Already have an account? <Link href="/sign-in" className="text-custom font-semibold">Sign In</Link>
           </div>
         </div>
       </FormProvider>
