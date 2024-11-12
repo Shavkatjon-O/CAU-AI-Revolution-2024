@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, User, Calendar, ArrowRight } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-// import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const steps = ['Personal Info', 'Health Info', 'Dietary Preferences'];
 
@@ -61,7 +60,7 @@ const Page = () => {
   return (
     <div className='px-4'>
       <FormProvider {...methods}>
-        <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-3xl shadow-2xl border border-custom">
+        <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-3xl shadow-2xl border">
           <div className='flex items-center justify-center pb-6 font-semibold text-custom'>
             <span className='text-3xl'>SafeBite</span>
           </div>
@@ -69,6 +68,7 @@ const Page = () => {
           <Image src="/img/sign-up-image.svg" alt="Image" width={256} height={256} className="mx-auto w-full mb-6 shadow-md rounded-3xl" />
 
           <h2 className="text-2xl font-bold mb-6 text-center">{steps[step]}</h2>
+
           {/* Step 1 - Personal Info */}
           {step === 0 && (
             <>
@@ -79,7 +79,7 @@ const Page = () => {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Email"
+                  placeholder="Enter your email"
                   className="pl-10 h-12 focus:border-custom"
                 />
                 <Mail size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -92,7 +92,7 @@ const Page = () => {
                   type="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="Password"
+                  placeholder="Enter your password"
                   className="pl-10 h-12 focus:border-custom"
                 />
                 <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -141,14 +141,19 @@ const Page = () => {
               </div>
 
               <div className="relative mt-4">
-                <Input
-                  id="gender"
-                  name="gender"
+                <Select
                   value={formData.gender}
-                  onChange={handleChange}
-                  placeholder="Gender"
-                  className="pl-10 h-12 focus:border-custom"
-                />
+                  onValueChange={(value) => handleSelectChange('gender', value)}
+                >
+                  <SelectTrigger className="pl-10 h-12 focus:border-custom">
+                    <SelectValue placeholder="Select Gender" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Male">Male</SelectItem>
+                    <SelectItem value="Female">Female</SelectItem>
+                    <SelectItem value="Other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
                 <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
 
@@ -177,6 +182,25 @@ const Page = () => {
                 />
                 <Calendar size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
+
+              <div className="relative mt-4">
+                <Select
+                  value={formData.activityLevel}
+                  onValueChange={(value) => handleSelectChange('activityLevel', value)}
+                >
+                  <SelectTrigger className="pl-10 h-12 focus:border-custom">
+                    <SelectValue placeholder="Activity Level" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Sedentary">Sedentary</SelectItem>
+                    <SelectItem value="Light">Light</SelectItem>
+                    <SelectItem value="Moderate">Moderate</SelectItem>
+                    <SelectItem value="Active">Active</SelectItem>
+                    <SelectItem value="Very Active">Very Active</SelectItem>
+                  </SelectContent>
+                </Select>
+                <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
+              </div>
             </>
           )}
 
@@ -202,23 +226,11 @@ const Page = () => {
 
               <div className="relative mt-4">
                 <Input
-                  id="activityLevel"
-                  name="activityLevel"
-                  value={formData.activityLevel}
-                  onChange={handleChange}
-                  placeholder="Activity Level"
-                  className="pl-10 h-12 focus:border-custom"
-                />
-                <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
-              </div>
-
-              <div className="relative mt-4">
-                <Input
                   id="dietaryPreferences"
                   name="dietaryPreferences"
                   value={formData.dietaryPreferences}
                   onChange={handleChange}
-                  placeholder="Dietary Preferences (e.g. vegan, keto)"
+                  placeholder="Dietary Preferences (e.g., vegan, keto)"
                   className="pl-10 h-12 focus:border-custom"
                 />
                 <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -230,7 +242,7 @@ const Page = () => {
                   name="allergies"
                   value={formData.allergies}
                   onChange={handleChange}
-                  placeholder="Any allergies?"
+                  placeholder="Allergies (if any)"
                   className="pl-10 h-12 focus:border-custom"
                 />
                 <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
@@ -238,31 +250,15 @@ const Page = () => {
             </>
           )}
 
-          {/* Buttons for Navigation */}
-          <div className="flex justify-between mt-6">
-            <Button
-              variant="outline"
-              onClick={handlePrevious}
-              disabled={step === 0}
-              className="w-32"
-            >
-              Previous
-            </Button>
-            <Button
-              onClick={handleNext}
-              className="w-32 bg-custom hover:bg-indigo-800 font-semibold"
-            >
-              {step === steps.length - 1 ? (
-                <>
-                  Submit
-                  <ArrowRight size={20} className="ml-2" />
-                </>
-              ) : (
-                <>
-                  Next
-                  <ArrowRight size={20} className="ml-2" />
-                </>
-              )}
+          <div className="mt-6 flex justify-between">
+            {step > 0 && (
+              <Button variant="secondary" onClick={handlePrevious} className="h-12">
+                Back
+              </Button>
+            )}
+            <Button onClick={handleNext} className="h-12 bg-custom hover:bg-indigo-700">
+              {step < steps.length - 1 ? 'Next' : 'Finish'}
+              {step < steps.length - 1 && <ArrowRight className="ml-2" />}
             </Button>
           </div>
         </div>
