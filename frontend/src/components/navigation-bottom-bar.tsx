@@ -6,9 +6,10 @@ import {
   House,
   CalendarCheck,
   ShoppingCart,
-  MessageSquareText,
+  Sparkles,
   User,
 } from "lucide-react";
+
 
 const NavigationBottomBar = () => {
   const currentRoute = usePathname();
@@ -16,8 +17,8 @@ const NavigationBottomBar = () => {
   const menuItems = [
     { href: "/dashboard", label: "Home", icon: House },
     { href: "/dashboard/meal-plans", label: "Meal plans", icon: CalendarCheck },
-    { href: "/dashboard/chat", label: "Chat", icon: MessageSquareText },
-    { href: "/dashboard/groceries", label: "Groceries", icon: ShoppingCart },
+    { href: "/dashboard/chat", label: "AI Assistant", icon: Sparkles },
+    { href: "/dashboard/groceries", label: "Shopping Lists", icon: ShoppingCart },
     { href: "/dashboard/profile", label: "Profile", icon: User },
   ];
 
