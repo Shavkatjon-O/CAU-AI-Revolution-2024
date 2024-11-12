@@ -1,6 +1,6 @@
 const Page = () => {
   return (
-    <div>Page</div>
+    <div>Chats</div>
   )
 }
 export default Page;
