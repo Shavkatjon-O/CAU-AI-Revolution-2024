@@ -1,6 +1,13 @@
 import os
 import multiprocessing
 
+
+from dotenv import load_dotenv, find_dotenv
+
+
+load_dotenv(find_dotenv())
+
+
 wsgi_app = "core.wsgi:application"
 
 bind = f"0.0.0.0:8000"
