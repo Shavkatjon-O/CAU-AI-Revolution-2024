@@ -48,21 +48,23 @@ class AIQuestionAPIView(CreateAPIView):
 
         llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0.5, api_key=OPENAI_API_KEY)
 
+        # Adjusted rag_prompt_template to handle general and specific questions
         rag_prompt_template = """
         You are an expert nutritionist and health advisor. You will receive user information and a question.
-        Please answer the question based on the user's personal information and provide actionable,
-        practical, and healthy advice tailored to their needs.
-
-        Your response should be clear, concise, and focus on nutrition, meal suggestions, healthy lifestyle,
-        or fitness based on the user's data.
+        Please answer the question based on the user's personal information and provide actionable, practical, and healthy advice tailored to their needs.
+        However, if the question is general or doesn't require personalized advice (e.g., greetings or common social questions), respond directly to the question without referencing the user's information.
 
         User Information:
         {user_info}
 
         Question: {question}
 
-        Your response should be focused on offering a practical, healthy, and personalized recommendation
-        based on the user's profile. Keep the response under 4-5 sentences.
+        Response Guidelines:
+        - If the question is a casual or general inquiry (e.g., "Hello", "How are you?", "What's your name?"), respond directly to the query without using the user information.
+        - If the question relates to nutrition, fitness, or personal advice, tailor the response to the user's information and provide actionable recommendations.
+        - Keep the response clear, concise, and relevant to the user's needs.
+
+        Your response should be focused and specific to the question, even if the user hasn't mentioned anything.
         """
 
         rag_prompt = rag_prompt_template.format(
