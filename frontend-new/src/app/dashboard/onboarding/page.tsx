@@ -27,7 +27,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-// Step 1 Schema with manual transformations
 const Step1Schema = z.object({
   age: z
     .string()
@@ -67,7 +66,7 @@ type Step1Data = z.infer<typeof Step1Schema>;
 type Step2Data = z.infer<typeof Step2Schema>;
 type Step3Data = z.infer<typeof Step3Schema>;
 
-const UpdateProfilePage = () => {
+const Page = () => {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -135,208 +134,211 @@ const UpdateProfilePage = () => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto px-4 py-6">
-      <h1 className="text-center text-2xl font-bold">Update Your Profile</h1>
+    <div className="size-full max-w-md mx-auto p-6 flex justify-center items-center">
+      <div className="p-6 shadow-sm rounded-md border max-w-sm w-full">
 
-      {/* Step 1 Form */}
-      {step === 1 && (
-        <Form {...form1}>
-          <form onSubmit={form1.handleSubmit(onSubmitStep1)} className="space-y-4">
-            <FormField
-              control={form1.control}
-              name="age"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Age</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="Age" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        <h1 className="text-center text-2xl font-bold text-custom">Profile Information</h1>
 
-            <FormField
-              control={form1.control}
-              name="gender"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Gender</FormLabel>
-                  <FormControl>
-                    <Select value={field.value} onValueChange={field.onChange}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select gender" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Gender Options</SelectLabel>
-                          <SelectItem value="Male">Male</SelectItem>
-                          <SelectItem value="Female">Female</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+        {/* Step 1 Form */}
+        {step === 1 && (
+          <Form {...form1}>
+            <form onSubmit={form1.handleSubmit(onSubmitStep1)} className="space-y-4">
+              <FormField
+                control={form1.control}
+                name="age"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Age</FormLabel>
+                    <FormControl>
+                      <Input type="number" placeholder="Age" {...field} className="h-12" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form1.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Gender</FormLabel>
+                    <FormControl>
+                      <Select value={field.value} onValueChange={field.onChange}>
+                        <SelectTrigger className="w-full h-12">
+                          <SelectValue placeholder="Select gender" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Gender Options</SelectLabel>
+                            <SelectItem value="Male">Male</SelectItem>
+                            <SelectItem value="Female">Female</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
 
-            <FormField
-              control={form1.control}
-              name="height"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Height (cm)</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="Height" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form1.control}
+                name="height"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Height (cm)</FormLabel>
+                    <FormControl>
+                      <Input type="number" placeholder="Height" {...field} className="h-12" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form1.control}
-              name="weight"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Weight (kg)</FormLabel>
-                  <FormControl>
-                    <Input type="number" placeholder="Weight" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form1.control}
+                name="weight"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Weight (kg)</FormLabel>
+                    <FormControl>
+                      <Input type="number" placeholder="Weight" {...field} className="h-12" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {message && <p className="text-red-500">{message}</p>}
+              {message && <p className="text-red-500">{message}</p>}
 
-            <div className="flex justify-between">
-              <Button type="button" onClick={handleSkip} className="w-1/2">
-                Skip
-              </Button>
-              <Button type="submit" className="w-1/2" disabled={isSubmitting}>
-                {isSubmitting ? <Loader2 className="animate-spin" /> : "Next"}
-              </Button>
-            </div>
-          </form>
-        </Form>
-      )}
+              <div className="flex justify-between gap-2">
+                <Button type="button" onClick={handleSkip} className="w-1/2 h-12" variant="secondary">
+                  Skip
+                </Button>
+                <Button type="submit" className="w-1/2 h-12 bg-custom hover:bg-indigo-800" disabled={isSubmitting}>
+                  {isSubmitting ? <Loader2 className="animate-spin" /> : "Next"}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        )}
 
-      {/* Step 2 Form */}
-      {step === 2 && (
-        <Form {...form2}>
-          <form onSubmit={form2.handleSubmit(onSubmitStep2)} className="space-y-4">
-            <FormField
-              control={form2.control}
-              name="goal"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Goal</FormLabel>
-                  <FormControl>
-                    <Select {...field}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select goal" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Goal Options</SelectLabel>
-                          <SelectItem value="Weight Loss">Weight Loss</SelectItem>
-                          <SelectItem value="Muscle Gain">Muscle Gain</SelectItem>
-                          <SelectItem value="Maintain">Maintain</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+        {/* Step 2 Form */}
+        {step === 2 && (
+          <Form {...form2}>
+            <form onSubmit={form2.handleSubmit(onSubmitStep2)} className="space-y-4">
+              <FormField
+                control={form2.control}
+                name="goal"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Goal</FormLabel>
+                    <FormControl>
+                      <Select {...field}>
+                        <SelectTrigger className="w-full h-12">
+                          <SelectValue placeholder="Select goal" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Goal Options</SelectLabel>
+                            <SelectItem value="Weight Loss">Weight Loss</SelectItem>
+                            <SelectItem value="Muscle Gain">Muscle Gain</SelectItem>
+                            <SelectItem value="Maintain">Maintain</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form2.control}
-              name="allergies"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Allergies</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form2.control}
+                name="allergies"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Allergies</FormLabel>
+                    <FormControl>
+                      <Input {...field} className="h-12" placeholder="Allergies" />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            {message && <p className="text-red-500">{message}</p>}
+              {message && <p className="text-red-500">{message}</p>}
 
-            <div className="flex justify-between">
-              <Button type="button" onClick={handleSkip} className="w-1/2">
-                Skip
-              </Button>
-              <Button type="submit" className="w-1/2" disabled={isSubmitting}>
-                {isSubmitting ? <Loader2 className="animate-spin" /> : "Next"}
-              </Button>
-            </div>
-          </form>
-        </Form>
-      )}
+              <div className="flex justify-between gap-2">
+                <Button type="button" onClick={handleSkip} className="w-1/2 h-12" variant="secondary">
+                  Skip
+                </Button>
+                <Button type="submit" className="w-1/2 h-12 bg-custom hover:bg-indigo-800" disabled={isSubmitting}>
+                  {isSubmitting ? <Loader2 className="animate-spin" /> : "Next"}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        )}
 
-      {/* Step 3 Form */}
-      {step === 3 && (
-        <Form {...form3}>
-          <form onSubmit={form3.handleSubmit(onSubmitStep3)} className="space-y-4">
-            <FormField
-              control={form3.control}
-              name="activity_level"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Activity Level</FormLabel>
-                  <FormControl>
-                    <Select {...field}>
-                      <SelectTrigger className="w-full">
-                        <SelectValue placeholder="Select activity level" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectGroup>
-                          <SelectLabel>Activity Level Options</SelectLabel>
-                          <SelectItem value="Sedentary">Sedentary</SelectItem>
-                          <SelectItem value="Light">Light</SelectItem>
-                          <SelectItem value="Moderate">Moderate</SelectItem>
-                          <SelectItem value="Active">Active</SelectItem>
-                          <SelectItem value="Very Active">Very Active</SelectItem>
-                        </SelectGroup>
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+        {/* Step 3 Form */}
+        {step === 3 && (
+          <Form {...form3}>
+            <form onSubmit={form3.handleSubmit(onSubmitStep3)} className="space-y-4">
+              <FormField
+                control={form3.control}
+                name="activity_level"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Activity Level</FormLabel>
+                    <FormControl>
+                      <Select {...field}>
+                        <SelectTrigger className="w-full h-12">
+                          <SelectValue placeholder="Select activity level" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Activity Level Options</SelectLabel>
+                            <SelectItem value="Sedentary">Sedentary</SelectItem>
+                            <SelectItem value="Light">Light</SelectItem>
+                            <SelectItem value="Moderate">Moderate</SelectItem>
+                            <SelectItem value="Active">Active</SelectItem>
+                            <SelectItem value="Very Active">Very Active</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={form3.control}
-              name="dietary_preferences"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Dietary Preferences</FormLabel>
-                  <FormControl>
-                    <Input {...field} />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={form3.control}
+                name="dietary_preferences"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Dietary Preferences</FormLabel>
+                    <FormControl>
+                      <Input {...field} className="h-12" placeholder="Dietary Preferences" />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
 
-            {message && <p className="text-red-500">{message}</p>}
+              {message && <p className="text-red-500">{message}</p>}
 
-            <div className="flex justify-between">
-              <Button type="submit" className="w-full" disabled={isSubmitting}>
-                {isSubmitting ? <Loader2 className="animate-spin" /> : "Submit"}
-              </Button>
-            </div>
-          </form>
-        </Form>
-      )}
+              <div className="flex justify-between">
+                <Button type="submit" className="w-full h-12 bg-custom hover:bg-indigo-800" disabled={isSubmitting}>
+                  {isSubmitting ? <Loader2 className="animate-spin" /> : "Submit"}
+                </Button>
+              </div>
+            </form>
+          </Form>
+        )}
+      </div>
     </div>
   );
 };
 
-export default UpdateProfilePage;
+export default Page;
