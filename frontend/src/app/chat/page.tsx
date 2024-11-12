@@ -47,8 +47,8 @@ const ChatPage = () => {
                   <span>{message.text}</span>
                 </div>
                 <div className="flex items-center justify-between space-x-2">
-                  <div className="text-xs font-semibold text-slate-400">{message.timestamp}</div>
-                  <div>{message.sender === "User" && (<CheckCheck className="text-slate-400 size-4" />)}</div>
+                  <div className="text-xs font-semibold text-slate-300">{message.timestamp}</div>
+                  <div>{message.sender === "User" && (<CheckCheck className="text-slate-300 size-4" />)}</div>
                 </div>
               </div>
 
