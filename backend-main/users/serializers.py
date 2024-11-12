@@ -74,6 +74,23 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         )
 
 
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            "first_name",
+            "last_name",
+            "age",
+            "gender",
+            "height",
+            "weight",
+            "activity_level",
+            "goal",
+            "dietary_preferences",
+            "allergies",
+        )
+
+
 __all__ = (
     "UserRegisterSerializer",
     "UserProfileSerializer",
