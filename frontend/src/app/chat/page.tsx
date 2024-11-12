@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { SendHorizontal, Check } from "lucide-react";
+import { SendHorizontal, CheckCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface Message {
@@ -38,17 +38,20 @@ const ChatPage = () => {
             className={`flex ${message.sender === "User" ? "justify-end" : "justify-start"}`}
           >
             <div
-              className={`max-w-xs px-4 py-2 rounded-lg ${
-                message.sender === "User" ? "bg-custom text-white" : "bg-slate-300"
+              className={`max-w-xs px-4 py-3 rounded-t-2xl ${
+                message.sender === "User" ? "bg-custom text-white rounded-l-2xl" : "bg-slate-300 rounded-r-xl"
               }`}
             >
-              <div className="flex items-center space-x-2">
-                <span>{message.text}</span>
-                {message.sender === "User" && (
-                  <Check className="text-slate-300" size={16} />
-                )}
+              <div className="flex flex-col space-y-2">
+                <div>
+                  <span>{message.text}</span>
+                </div>
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="text-xs font-semibold text-slate-400">{message.timestamp}</div>
+                  <div>{message.sender === "User" && (<CheckCheck className="text-slate-400 size-4" />)}</div>
+                </div>
               </div>
-              <div className="text-xs text-slate-300 mt-1 text-right">{message.timestamp}</div>
+
             </div>
           </div>
         ))}
