@@ -18,6 +18,7 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Loader2 } from "lucide-react";
+import Link from "next/link";
 
 const FormSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -132,6 +133,12 @@ const Page = () => {
               "Sign In"
             )}
           </Button>
+
+          <div className="w-full flex justify-center">
+            <span className="text-slate-500">Don&apos;t have an account yet?</span>
+            <Link href="/sign-up" className="text-custom ml-1">Sign Up</Link>
+          </div>
+
         </form>
       </Form>
     </div>
