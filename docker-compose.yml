@@ -1,0 +1,67 @@
+services:
+  postgres:
+    container_name: cau_hackathon_postgres
+    hostname: postgres
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=cau_hackathon
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready --username=admin --dbname=cau_hackathon"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  backend:
+    container_name: cau_hackathon_backend
+    hostname: backend
+    build:
+      context: backend-main
+      dockerfile: Dockerfile
+    command: gunicorn -c ./gunicorn_conf.py
+    volumes:
+      - ./backend-main/logs:/home/app/logs
+      - ./backend-main/staticfiles:/home/app/staticfiles
+      - ./backend-main/media:/home/app/media/
+      - ./backend-main/locales:/home/app/locales
+    environment:
+      - LOGGER_BOT_TOKEN=7103058255:AAEgd6zSw9PAvwneoCJ3OD0K2jEO4FUSnAo
+      - LOGGER_CHAT_ID=-1002190718985
+      - DEBUG=False
+      - DB_NAME=cau_hackathon
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - OPENAI_API_KEY=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
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 8080:8000
+    depends_on:
+      - postgres
+    restart: always
+
+  frontend:
+    container_name: cau_hackathon_frontend
+    hostname: frontend
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=production
+    ports:
+      - 3030:3000
+    depends_on:
+      - postgres
+      - backend
+    restart: always
+
+volumes:
+  postgres_data:
