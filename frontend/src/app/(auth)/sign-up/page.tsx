@@ -39,9 +39,9 @@ const Page = () => {
       setStep(step + 1);
     } else {
       try {
-        const mockData = {
-          email: "admin@gmail.com",
-          password: "admin",
+        // const mockData = {
+          // email: "admin@gmail.com",
+          // password: "admin",
           // firstName: "John",
           // lastName: "Doe",
           // age: "30",
@@ -52,7 +52,7 @@ const Page = () => {
           // goal: "Lose Weight",
           // dietary_preferences: "Vegetarian",
           // allergies: "Peanuts"
-        };
+        // };
 
         const payload = {
           email: formData.email,
