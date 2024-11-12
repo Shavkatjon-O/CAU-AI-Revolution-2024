@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen pb-16`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen py-20`}
       >
         <div className="size-full overflow-y-scroll">
           <TopBar />
