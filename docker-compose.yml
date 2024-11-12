@@ -39,7 +39,6 @@ services:
       - DB_PASSWORD=admin
       - DB_HOST=postgres
       - DB_PORT=5432
-      - OPENAI_API_KEY=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
     security_opt:
       - seccomp:unconfined
     ports:
