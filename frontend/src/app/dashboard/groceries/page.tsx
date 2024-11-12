@@ -7,6 +7,28 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import Cookies from "js-cookie";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, FormProvider } from "react-hook-form";
+import { z } from "zod";
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectValue
+} from "@/components/ui/select";
+import {
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl
+} from "@/components/ui/form";
 
 type ShoppingList = {
   id: string;
@@ -16,12 +38,20 @@ type ShoppingList = {
   priority: string;
 };
 
+const FormSchema = z.object({
+  dob: z.date({
+    required_error: "A due date is required.",
+  }),
+  priority: z.string().min(1, "Priority is required."),
+});
+
 const Page = () => {
   const [shoppingLists, setShoppingLists] = useState<ShoppingList[]>([]);
   const [newListName, setNewListName] = useState("");
-  const [dueDate, setDueDate] = useState("");
-  const [priority, setPriority] = useState("");
   const [newIngredientForList, setNewIngredientForList] = useState<{ [key: string]: string }>({});
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+  });
 
   // Load shopping lists from cookies when the component mounts
   useEffect(() => {
@@ -38,21 +68,21 @@ const Page = () => {
     }
   }, [shoppingLists]);
 
-  const createShoppingList = () => {
-    if (!newListName) return;
+  const createShoppingList = (data: z.infer<typeof FormSchema>) => {
+    if (!newListName || !data.dob || !data.priority) return;
 
     const newList: ShoppingList = {
       id: Date.now().toString(),
       name: newListName,
       ingredients: [],
-      dueDate,
-      priority,
+      dueDate: format(data.dob, "yyyy-MM-dd"), // Format the date to YYYY-MM-DD
+      priority: data.priority,
     };
+
     const updatedShoppingLists = [...shoppingLists, newList];
     setShoppingLists(updatedShoppingLists);
     setNewListName("");
-    setDueDate("");
-    setPriority("");
+    setNewIngredientForList({});
   };
 
   const addIngredientToList = (listId: string) => {
@@ -89,6 +119,7 @@ const Page = () => {
     <div className="bg-white p-6 h-full overflow-y-scroll">
       <h1 className="text-custom text-3xl font-semibold mb-6">Shopping Lists</h1>
 
+      <span className="mb-1">Title</span>
       <div className="mb-6">
         <Input
           className="mb-4 h-12"
@@ -96,22 +127,89 @@ const Page = () => {
           value={newListName}
           onChange={(e) => setNewListName(e.target.value)}
         />
-        <Input
-          className="mb-4 h-12"
-          placeholder="Due date (e.g., 2024-12-01)"
-          value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
-        />
-        <Input
-          className="mb-4 h-12"
-          placeholder="Priority (e.g., High, Medium, Low)"
-          value={priority}
-          onChange={(e) => setPriority(e.target.value)}
-        />
-        <Button onClick={createShoppingList} className="bg-custom hover:bg-indigo-700 text-white w-full h-12">
-          <PlusCircle className="mr-1"  />
-          Create Shopping List
-        </Button>
+
+        {/* FormProvider wraps the entire form */}
+        <FormProvider {...form}>
+          {/* Date Picker */}
+          <div className="mb-4">
+            <FormField
+              control={form.control}
+              name="dob"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Due date</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className="pl-3 text-left font-normal w-full h-12"
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* Priority Selector - ShadCN Select */}
+          <div className="mb-4">
+            <FormField
+              control={form.control}
+              name="priority"
+              render={({ field }) => (
+                <FormItem className="flex flex-col">
+                  <FormLabel>Priority</FormLabel>
+                  <Select
+                    value={field.value}
+                    onValueChange={field.onChange}
+                  >
+                    <SelectTrigger className="w-full h-12">
+                      <SelectValue placeholder="Select priority" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectLabel>Priority Levels</SelectLabel>
+                        <SelectItem value="High">High</SelectItem>
+                        <SelectItem value="Medium">Medium</SelectItem>
+                        <SelectItem value="Low">Low</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {/* Handling errors correctly */}
+                  {form.formState.errors.priority && (
+                    <p className="text-red-500 text-sm">{form.formState.errors.priority?.message}</p>
+                  )}
+                </FormItem>
+              )}
+            />
+          </div>
+
+          <Button
+            onClick={() => createShoppingList(form.getValues())}
+            className="bg-custom hover:bg-indigo-700 text-white w-full h-12"
+          >
+            <PlusCircle className="mr-1" />
+            Create Shopping List
+          </Button>
+        </FormProvider>
       </div>
 
       <div className="space-y-4">
@@ -136,11 +234,7 @@ const Page = () => {
                   </ul>
                 </div>
               </div>
-              <Button
-                onClick={() => removeShoppingList(list.id)}
-                className="p-2"
-                variant="secondary"
-              >
+              <Button onClick={() => removeShoppingList(list.id)} className="p-2" variant="secondary">
                 <Trash2 />
               </Button>
             </div>
