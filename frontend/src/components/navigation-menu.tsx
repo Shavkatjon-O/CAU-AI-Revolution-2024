@@ -33,7 +33,7 @@ const NavigationMenu = () => {
       <Link href="/" className="w-1/5 h-full flex justify-center items-center">
         <div className="flex flex-col items-center space-y-1">
           <ShoppingCart />
-          <span className="text-xs text-gray-700 font-medium">Shopping lists</span>
+          <span className="text-xs text-gray-700 font-medium">Groceries</span>
         </div>
       </Link>
       <Link href="/" className="w-1/5 h-full flex justify-center items-center">
