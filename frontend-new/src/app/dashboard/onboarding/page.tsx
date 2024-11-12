@@ -328,10 +328,7 @@ const UpdateProfilePage = () => {
             {message && <p className="text-red-500">{message}</p>}
 
             <div className="flex justify-between">
-              <Button type="button" onClick={handleSkip} className="w-1/2">
-                Skip
-              </Button>
-              <Button type="submit" className="w-1/2" disabled={isSubmitting}>
+              <Button type="submit" className="w-full" disabled={isSubmitting}>
                 {isSubmitting ? <Loader2 className="animate-spin" /> : "Submit"}
               </Button>
             </div>
