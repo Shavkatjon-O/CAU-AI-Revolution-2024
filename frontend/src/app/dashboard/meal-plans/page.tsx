@@ -1,19 +1,16 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { PlusCircle, Trash2 } from "lucide-react";
+import { PlusCircle, Trash2, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import Cookies from "js-cookie";
-// import { Calendar } from "@/components/ui/calendar";
-// import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { z } from "zod";
 import { format } from "date-fns";
-// import { CalendarIcon } from "lucide-react";
 import {
   Select,
   SelectTrigger,
@@ -27,7 +24,6 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  // FormControl
 } from "@/components/ui/form";
 
 type MealPlan = {
@@ -52,7 +48,7 @@ const Page = () => {
     resolver: zodResolver(FormSchema),
   });
 
-  // Load meal plans from cookies when the component mounts
+  // Load meal plans from cookies on mount
   useEffect(() => {
     const storedMealPlans = Cookies.get("mealPlans");
     if (storedMealPlans) {
@@ -60,11 +56,9 @@ const Page = () => {
     }
   }, []);
 
-  // Save meal plans to cookies whenever they change
+  // Save meal plans to cookies when updated
   useEffect(() => {
-    if (mealPlans.length > 0) {
-      Cookies.set("mealPlans", JSON.stringify(mealPlans), { expires: 7 });
-    }
+    Cookies.set("mealPlans", JSON.stringify(mealPlans), { expires: 7 });
   }, [mealPlans]);
 
   const createMealPlan = (data: z.infer<typeof FormSchema>) => {
@@ -73,14 +67,13 @@ const Page = () => {
     const newMeal: MealPlan = {
       id: Date.now().toString(),
       mealName: newMealName,
-      dayOfWeek: format(new Date(), "EEEE"), // Get current day of the week
+      dayOfWeek: format(new Date(), "EEEE"), 
       mealTime: data.mealTime,
       ingredients: [],
       priority: data.priority,
     };
 
-    const updatedMealPlans = [...mealPlans, newMeal];
-    setMealPlans(updatedMealPlans);
+    setMealPlans([...mealPlans, newMeal]);
     setNewMealName("");
     setNewMealIngredients({});
   };
@@ -104,23 +97,19 @@ const Page = () => {
   };
 
   const removeMealPlan = (id: string) => {
-    const updatedMealPlans = mealPlans.filter((meal) => meal.id !== id);
-    setMealPlans(updatedMealPlans);
+    setMealPlans(mealPlans.filter((meal) => meal.id !== id));
   };
 
   const handleIngredientChange = (mealId: string, value: string) => {
-    setNewMealIngredients((prev) => ({
-      ...prev,
-      [mealId]: value,
-    }));
+    setNewMealIngredients((prev) => ({ ...prev, [mealId]: value }));
   };
 
   return (
-    <div className="py-6  max-w-4xl mx-auto h-full">
-      <h1 className="text-3xl font-semibold text-custom text-start px-6">Meal Planner</h1>
+    <div className="p-4 overflow-y-scroll mx-auto h-full">
+      <h1 className="text-3xl font-semibold text-custom px-6 mb-6">Meal Planner</h1>
 
       {/* Meal Plan Creation Form */}
-      <div className="bg-white p-6 rounded-lg mb-6">
+      <div className="bg-white p-6 rounded-lg mb-6 shadow-md">
         <Input
           className="mb-4 h-12"
           placeholder="Enter meal name (e.g., Breakfast, Lunch, Dinner)"
@@ -128,7 +117,6 @@ const Page = () => {
           onChange={(e) => setNewMealName(e.target.value)}
         />
 
-        {/* FormProvider wraps the entire form */}
         <FormProvider {...form}>
           <div className="mb-6">
             <FormField
@@ -188,24 +176,29 @@ const Page = () => {
       {/* Meal Plans Display */}
       <div className="space-y-6">
         {mealPlans.map((meal) => (
-          <Card key={meal.id} className="p-6 bg-white rounded-lg">
-            <div className="flex justify-between">
+          <Card key={meal.id} className="p-6 bg-white rounded-lg shadow-md">
+            <div className="flex justify-between items-start">
               <div>
                 <h2 className="text-xl font-semibold">{meal.mealName} ({meal.dayOfWeek})</h2>
                 <p className="text-sm text-gray-600">
                   Time: {meal.mealTime} | Priority: {meal.priority}
                 </p>
-                <div className="mt-2">
+                <div className="mt-4">
                   <h3 className="text-lg">Ingredients</h3>
-                  <ul className="list-disc pl-6">
+                  <div className="grid grid-cols-2 gap-3 mt-2">
                     {meal.ingredients.length > 0 ? (
                       meal.ingredients.map((ingredient, idx) => (
-                        <li key={idx} className="text-sm">{ingredient}</li>
+                        <div
+                          key={idx}
+                          className="bg-gray-100 p-3 rounded-md shadow-sm text-sm text-gray-700 flex items-center justify-between"
+                        >
+                          <span>{ingredient}</span>
+                        </div>
                       ))
                     ) : (
-                      <li className="text-sm text-gray-500">No ingredients yet</li>
+                      <p className="text-sm text-gray-500">No ingredients yet</p>
                     )}
-                  </ul>
+                  </div>
                 </div>
               </div>
               <Button
@@ -229,6 +222,7 @@ const Page = () => {
                 onClick={() => addIngredientToMeal(meal.id)}
                 className="bg-blue-600 hover:bg-blue-700 text-white w-full h-12"
               >
+                <CheckCircle className="mr-1" />
                 Add Ingredient
               </Button>
             </div>
