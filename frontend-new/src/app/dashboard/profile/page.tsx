@@ -2,7 +2,19 @@
 
 import coreApi from "@/lib/coreApi";
 import { useState, useEffect } from "react";
-import { User, Mail, Info, Calendar, Ruler, Dumbbell, Target, Utensils, AlertTriangle } from "lucide-react";
+import {
+  User,
+  Mail,
+  Info,
+  Calendar,
+  Ruler,
+  Dumbbell,
+  Target,
+  Utensils,
+  AlertTriangle
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface ProfileType {
   id: number;
@@ -41,7 +53,6 @@ const Page = () => {
       });
   }, []);
 
-  // Fallback values
   const getProfileValue = (value: string | number | undefined, fallback: string) => {
     return value ? value : fallback;
   };
@@ -56,7 +67,7 @@ const Page = () => {
             </div>
           ) : profile ? (
             <>
-              <div className="py-10 flex flex-col items-center">
+              <div className="pt-10 flex flex-col items-center">
                 <div className="bg-indigo-100 text-slate-500 p-6 rounded-full">
                   <User className="w-20 h-20" />
                 </div>
@@ -68,6 +79,17 @@ const Page = () => {
                   </span>
                   <span className="text-slate-600">{profile.email || 'no-email@example.com'}</span>
                 </div>
+              </div>
+
+              <div className="px-6 py-4 flex flex-col space-y-2">
+                <Button className="h-12" variant="outline" asChild>
+                  <Link className="border-red-500 text-red-500 hover:bg-red-400 hover:text-white" href="/sign-out">
+                    Sign Out
+                  </Link>
+                </Button>
+                <Button className="h-12 bg-custom hover:bg-custom">
+                  Update Profile
+                </Button>
               </div>
 
               <div className="pt-4 bg-slate-50 border-t border-t-indigo-200">
