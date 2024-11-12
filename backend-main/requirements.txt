@@ -39,3 +39,11 @@ gunicorn==23.0.0
 
 # Logger
 loguru==0.7.2
+
+
+# Langchain (ai)
+langchain==0.2.14
+langchain-openai==0.1.22
+langchain-community==0.2.12
+langchainhub==0.1.21
+faiss-cpu
