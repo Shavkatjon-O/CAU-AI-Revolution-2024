@@ -1,5 +1,5 @@
-import os
 import multiprocessing
+import os
 
 wsgi_app = "core.wsgi:application"
 

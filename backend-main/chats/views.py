@@ -1,11 +1,13 @@
 # nutrition/views.py
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from .serializers import QuerySerializer
+import os
+
+from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 from langchain_openai import ChatOpenAI
 from langchain_openai.embeddings import OpenAIEmbeddings
-from langchain_core.runnables import RunnableLambda, RunnablePassthrough
-import os
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .serializers import QuerySerializer
 
 
 class NutritionAssistantAPIView(APIView):

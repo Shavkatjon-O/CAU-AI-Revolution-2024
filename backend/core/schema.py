@@ -1,16 +1,14 @@
-from django.urls import re_path, path
+from core.authentication import CustomJWTAuthentication
+from django.urls import path, re_path
 from drf_spectacular import openapi
+from drf_spectacular.contrib.rest_framework_simplejwt import SimpleJWTScheme
+from drf_spectacular.generators import BaseSchemaGenerator
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
     SpectacularSwaggerView,
 )
 from rest_framework import permissions
-
-from drf_spectacular.generators import BaseSchemaGenerator
-from drf_spectacular.contrib.rest_framework_simplejwt import SimpleJWTScheme
-from core.authentication import CustomJWTAuthentication
-
 
 swagger_urlpatterns = [
     # YOUR PATTERNS

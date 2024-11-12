@@ -1,16 +1,15 @@
-from django.urls import path
 from apps.users.api.views import (
-    SendVerification,
     CheckVerification,
-    RegistrationView,
-    LogoutView,
-    UserProfileView,
-    UserProfileUpdateView,
     LoginView,
-    RefreshTokenView,
+    LogoutView,
     PasswordResetView,
+    RefreshTokenView,
+    RegistrationView,
+    SendVerification,
+    UserProfileUpdateView,
+    UserProfileView,
 )
-
+from django.urls import path
 
 urlpatterns = [
     path("send_verification/", SendVerification.as_view(), name="send_verification"),

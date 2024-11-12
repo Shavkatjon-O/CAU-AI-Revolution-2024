@@ -1,12 +1,11 @@
-import random
-import jwt
 import datetime
+import random
 
+import jwt
 from cryptography.fernet import Fernet
 from django.conf import settings
-from django.core.mail import send_mail
 from django.core.cache import cache
-
+from django.core.mail import send_mail
 
 cipher_suite = Fernet(settings.ENCRYPTION_KEY)
 

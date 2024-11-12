@@ -1,16 +1,15 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.admin import GroupAdmin as BaseGroupAdmin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import (
+    AdminPasswordChangeForm,
     UserChangeForm,
     UserCreationForm,
-    AdminPasswordChangeForm,
 )
-from django.contrib.auth.models import User, Group
-
+from django.contrib.auth.models import Group, User
 from unfold.admin import ModelAdmin
 
-from .models import User, BlacklistedToken
+from .models import BlacklistedToken, User
 
 admin.site.unregister(Group)
 

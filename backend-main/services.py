@@ -1,12 +1,10 @@
 import os
 
+from dotenv import find_dotenv, load_dotenv
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 from langchain_openai import ChatOpenAI
 from langchain_openai.embeddings import OpenAIEmbeddings
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough, RunnableLambda
-
-from dotenv import load_dotenv, find_dotenv
-
 from users.models import User
 
 load_dotenv(find_dotenv())

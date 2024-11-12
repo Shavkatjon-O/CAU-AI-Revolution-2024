@@ -1,24 +1,21 @@
+from apps.common.utils import error_response, success_response
 from django.shortcuts import get_object_or_404
-
-from rest_framework import generics, status, permissions
+from rest_framework import generics, permissions, status
+from rest_framework.exceptions import AuthenticationFailed, MethodNotAllowed, NotFound
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.exceptions import AuthenticationFailed, NotFound
-from rest_framework.exceptions import MethodNotAllowed
 
+from ..models import BlacklistedToken, User
 from .serializers import (
-    UserSerializer,
-    UserProfileSerializer,
-    LoginSerializer,
-    SendVerificationSerializer,
     CheckVerificationSerializer,
-    RefreshTokenSerializer,
-    PasswordResetSerializer,
+    LoginSerializer,
     LogoutSerializer,
+    PasswordResetSerializer,
+    RefreshTokenSerializer,
+    SendVerificationSerializer,
+    UserProfileSerializer,
+    UserSerializer,
 )
-
-from ..models import User, BlacklistedToken
-from apps.common.utils import success_response, error_response
 
 
 class SendVerification(generics.CreateAPIView):

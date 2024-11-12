@@ -1,10 +1,8 @@
 import jwt
-
+from apps.users.api.utils import decrypt_access_token
+from apps.users.models import BlacklistedToken, User
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
-
-from apps.users.models import User, BlacklistedToken
-from apps.users.api.utils import decrypt_access_token
 
 
 class CustomJWTAuthentication(BaseAuthentication):

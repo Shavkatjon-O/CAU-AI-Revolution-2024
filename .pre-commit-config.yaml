@@ -1,3 +1,5 @@
+default_language_version:
+  python: "python3"
 exclude: ^.vscode/.*$
 minimum_pre_commit_version: "2.15.0"
 repos:
@@ -9,6 +11,12 @@ repos:
       - id: check-toml
       - id: end-of-file-fixer
       - id: trailing-whitespace
+  - repo: "https://github.com/PyCQA/isort"
+    rev: "5.13.2"
+    hooks:
+      - id: isort
+        args: [ "--profile", "black" ]
+        name: "Format code (isort)"
   - repo: https://github.com/psf/black
     rev: 24.4.2
     hooks:

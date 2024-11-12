@@ -1,9 +1,9 @@
 import os
-
-from pathlib import Path
-from django.utils.translation import gettext_lazy as _
-from dotenv import load_dotenv, find_dotenv
 from datetime import timedelta
+from pathlib import Path
+
+from django.utils.translation import gettext_lazy as _
+from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
 

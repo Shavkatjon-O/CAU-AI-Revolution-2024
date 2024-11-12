@@ -1,30 +1,29 @@
 import datetime
-import jwt
 from datetime import date
 
+import jwt
+from apps.common.redis_client import (
+    delete_otp,
+    delete_verify,
+    get_otp,
+    get_verify,
+    set_otp,
+    set_verify,
+)
+from django.conf import settings
+from django.contrib.auth import authenticate
+from django.core.cache import cache
 from rest_framework import serializers
 from rest_framework.exceptions import NotFound
 
-from django.core.cache import cache
-from django.conf import settings
-from django.contrib.auth import authenticate
-
-from ..models import User, BlacklistedToken
+from ..models import BlacklistedToken, User
 from .utils import (
-    generate_otp,
-    is_otp_unique,
-    send_otp_via_email,
     decrypt_access_token,
     decrypt_refresh_token,
     generate_jwt_token,
-)
-from apps.common.redis_client import (
-    set_otp,
-    get_otp,
-    delete_otp,
-    set_verify,
-    get_verify,
-    delete_verify,
+    generate_otp,
+    is_otp_unique,
+    send_otp_via_email,
 )
 
 

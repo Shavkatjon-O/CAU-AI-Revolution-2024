@@ -1,21 +1,20 @@
 import os
 
-# from langchain import hub
-
+from dotenv import find_dotenv, load_dotenv
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.runnables import RunnableLambda, RunnablePassthrough
 from langchain_openai import ChatOpenAI
 from langchain_openai.embeddings import OpenAIEmbeddings
+
+# from langchain import hub
+
 
 # from langchain_community.vectorstores import FAISS
 # from langchain_community.document_loaders import TextLoader
 
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 
 # from django.conf import settings
-
-from dotenv import load_dotenv, find_dotenv
 
 
 load_dotenv(find_dotenv())

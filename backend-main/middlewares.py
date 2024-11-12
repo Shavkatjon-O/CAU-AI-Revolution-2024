@@ -1,8 +1,8 @@
-import requests
 import traceback
-
-from django.conf import settings
 from datetime import datetime
+
+import requests
+from django.conf import settings
 
 
 def send_error_log(message) -> None:

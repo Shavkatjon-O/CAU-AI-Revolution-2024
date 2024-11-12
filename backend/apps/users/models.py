@@ -1,13 +1,12 @@
 import os
 
-from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.db.models import Q
-from django.conf import settings
-
-from apps.users.managers import UserManager
 from apps.common.models import BaseModel
-from apps.common.utils import process_image, process_document
+from apps.common.utils import process_document, process_image
+from apps.users.managers import UserManager
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+from django.db.models import Q
 
 
 class User(AbstractUser, BaseModel):
