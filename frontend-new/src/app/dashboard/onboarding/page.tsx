@@ -9,12 +9,29 @@ import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import coreApi from "@/lib/coreApi";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // Step 1 Schema with manual transformations
 const Step1Schema = z.object({
   age: z
-    .string() // Treat input as string initially
-    .transform((val) => parseInt(val)) // Convert to integer
+    .string()
+    .transform((val) => parseInt(val))
     .refine((val) => !isNaN(val), { message: "Age must be a valid number" })
     .refine((val) => val > 0, { message: "Age must be a positive number" })
     .refine((val) => val >= 1, { message: "Age must be at least 1" }),
@@ -22,15 +39,15 @@ const Step1Schema = z.object({
   gender: z.enum(["Male", "Female"]),
 
   height: z
-    .string() // Treat input as string initially
-    .transform((val) => parseFloat(val)) // Convert to float for height
+    .string()
+    .transform((val) => parseFloat(val))
     .refine((val) => !isNaN(val), { message: "Height must be a valid number" })
     .refine((val) => val > 0, { message: "Height must be positive" })
     .refine((val) => val <= 300, { message: "Height seems too large" }),
 
   weight: z
-    .string() // Treat input as string initially
-    .transform((val) => parseFloat(val)) // Convert to float for weight
+    .string()
+    .transform((val) => parseFloat(val))
     .refine((val) => !isNaN(val), { message: "Weight must be a valid number" })
     .refine((val) => val > 0, { message: "Weight must be positive" })
     .refine((val) => val <= 500, { message: "Weight seems too large" }),
@@ -55,7 +72,7 @@ const UpdateProfilePage = () => {
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [userData, setUserData] = useState<Step1Data & Step2Data & Step3Data>({
-    age: 1, // Ensure age is a valid value (1 or greater)
+    age: 0,
     gender: "Male",
     height: 0,
     weight: 0,
@@ -68,7 +85,7 @@ const UpdateProfilePage = () => {
 
   const form1 = useForm<Step1Data>({
     resolver: zodResolver(Step1Schema),
-    defaultValues: { age: 1, gender: "Male", height: 0, weight: 0 },
+    defaultValues: { age: 0, gender: "Male", height: 0, weight: 0 },
   });
 
   const form2 = useForm<Step2Data>({
@@ -123,107 +140,203 @@ const UpdateProfilePage = () => {
 
       {/* Step 1 Form */}
       {step === 1 && (
-        <form onSubmit={form1.handleSubmit(onSubmitStep1)} className="space-y-4">
-          <div>
-            <label>Age</label>
-            <Input type="number" {...form1.register("age")} />
-            {form1.formState.errors.age && (
-              <p className="text-red-500">{form1.formState.errors.age.message}</p>
-            )}
-          </div>
-          <div>
-            <label>Gender</label>
-            <select {...form1.register("gender")}>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-            </select>
-          </div>
-          <div>
-            <label>Height (cm)</label>
-            <Input type="number" {...form1.register("height")} />
-            {form1.formState.errors.height && (
-              <p className="text-red-500">{form1.formState.errors.height.message}</p>
-            )}
-          </div>
-          <div>
-            <label>Weight (kg)</label>
-            <Input type="number" {...form1.register("weight")} />
-            {form1.formState.errors.weight && (
-              <p className="text-red-500">{form1.formState.errors.weight.message}</p>
-            )}
-          </div>
+        <Form {...form1}>
+          <form onSubmit={form1.handleSubmit(onSubmitStep1)} className="space-y-4">
+            <FormField
+              control={form1.control}
+              name="age"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Age</FormLabel>
+                  <FormControl>
+                    <Input type="number" placeholder="Age" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          {message && <p className="text-red-500">{message}</p>}
+            <FormField
+              control={form1.control}
+              name="gender"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Gender</FormLabel>
+                  <FormControl>
+                    <Select value={field.value} onValueChange={field.onChange}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select gender" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Gender Options</SelectLabel>
+                          <SelectItem value="Male">Male</SelectItem>
+                          <SelectItem value="Female">Female</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <div className="flex justify-between">
-            <Button type="button" onClick={handleSkip} className="w-1/2">
-              Skip
-            </Button>
-            <Button type="submit" className="w-1/2" disabled={isSubmitting}>
-              {isSubmitting ? <Loader2 className="animate-spin" /> : "Next"}
-            </Button>
-          </div>
-        </form>
+
+            <FormField
+              control={form1.control}
+              name="height"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Height (cm)</FormLabel>
+                  <FormControl>
+                    <Input type="number" placeholder="Height" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form1.control}
+              name="weight"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Weight (kg)</FormLabel>
+                  <FormControl>
+                    <Input type="number" placeholder="Weight" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {message && <p className="text-red-500">{message}</p>}
+
+            <div className="flex justify-between">
+              <Button type="button" onClick={handleSkip} className="w-1/2">
+                Skip
+              </Button>
+              <Button type="submit" className="w-1/2" disabled={isSubmitting}>
+                {isSubmitting ? <Loader2 className="animate-spin" /> : "Next"}
+              </Button>
+            </div>
+          </form>
+        </Form>
       )}
 
       {/* Step 2 Form */}
       {step === 2 && (
-        <form onSubmit={form2.handleSubmit(onSubmitStep2)} className="space-y-4">
-          <div>
-            <label>Goal</label>
-            <select {...form2.register("goal")}>
-              <option value="Weight Loss">Weight Loss</option>
-              <option value="Muscle Gain">Muscle Gain</option>
-              <option value="Maintain">Maintain</option>
-            </select>
-          </div>
-          <div>
-            <label>Allergies</label>
-            <Input {...form2.register("allergies")} />
-          </div>
+        <Form {...form2}>
+          <form onSubmit={form2.handleSubmit(onSubmitStep2)} className="space-y-4">
+            <FormField
+              control={form2.control}
+              name="goal"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Goal</FormLabel>
+                  <FormControl>
+                    <Select {...field}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select goal" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Goal Options</SelectLabel>
+                          <SelectItem value="Weight Loss">Weight Loss</SelectItem>
+                          <SelectItem value="Muscle Gain">Muscle Gain</SelectItem>
+                          <SelectItem value="Maintain">Maintain</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
-          {message && <p className="text-red-500">{message}</p>}
+            <FormField
+              control={form2.control}
+              name="allergies"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Allergies</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          <div className="flex justify-between">
-            <Button type="button" onClick={handleSkip} className="w-1/2">
-              Skip
-            </Button>
-            <Button type="submit" className="w-1/2" disabled={isSubmitting}>
-              {isSubmitting ? <Loader2 className="animate-spin" /> : "Next"}
-            </Button>
-          </div>
-        </form>
+            {message && <p className="text-red-500">{message}</p>}
+
+            <div className="flex justify-between">
+              <Button type="button" onClick={handleSkip} className="w-1/2">
+                Skip
+              </Button>
+              <Button type="submit" className="w-1/2" disabled={isSubmitting}>
+                {isSubmitting ? <Loader2 className="animate-spin" /> : "Next"}
+              </Button>
+            </div>
+          </form>
+        </Form>
       )}
 
       {/* Step 3 Form */}
       {step === 3 && (
-        <form onSubmit={form3.handleSubmit(onSubmitStep3)} className="space-y-4">
-          <div>
-            <label>Activity Level</label>
-            <select {...form3.register("activity_level")}>
-              <option value="Sedentary">Sedentary</option>
-              <option value="Light">Light</option>
-              <option value="Moderate">Moderate</option>
-              <option value="Active">Active</option>
-              <option value="Very Active">Very Active</option>
-            </select>
-          </div>
-          <div>
-            <label>Dietary Preferences</label>
-            <Input {...form3.register("dietary_preferences")} />
-          </div>
+        <Form {...form3}>
+          <form onSubmit={form3.handleSubmit(onSubmitStep3)} className="space-y-4">
+            <FormField
+              control={form3.control}
+              name="activity_level"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Activity Level</FormLabel>
+                  <FormControl>
+                    <Select {...field}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder="Select activity level" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectGroup>
+                          <SelectLabel>Activity Level Options</SelectLabel>
+                          <SelectItem value="Sedentary">Sedentary</SelectItem>
+                          <SelectItem value="Light">Light</SelectItem>
+                          <SelectItem value="Moderate">Moderate</SelectItem>
+                          <SelectItem value="Active">Active</SelectItem>
+                          <SelectItem value="Very Active">Very Active</SelectItem>
+                        </SelectGroup>
+                      </SelectContent>
+                    </Select>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
-          {message && <p className="text-red-500">{message}</p>}
+            <FormField
+              control={form3.control}
+              name="dietary_preferences"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Dietary Preferences</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
-          <div className="flex justify-between">
-            <Button type="button" onClick={handleSkip} className="w-1/2">
-              Skip
-            </Button>
-            <Button type="submit" className="w-1/2" disabled={isSubmitting}>
-              {isSubmitting ? <Loader2 className="animate-spin" /> : "Submit"}
-            </Button>
-          </div>
-        </form>
+            {message && <p className="text-red-500">{message}</p>}
+
+            <div className="flex justify-between">
+              <Button type="button" onClick={handleSkip} className="w-1/2">
+                Skip
+              </Button>
+              <Button type="submit" className="w-1/2" disabled={isSubmitting}>
+                {isSubmitting ? <Loader2 className="animate-spin" /> : "Submit"}
+              </Button>
+            </div>
+          </form>
+        </Form>
       )}
     </div>
   );
