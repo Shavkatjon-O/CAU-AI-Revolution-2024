@@ -33,6 +33,7 @@ urlpatterns = [
     path("", redirect_to_admin),
     # api endpoitns
     path("api/users/", include("users.urls")),
+    path("api/chats/", include("chats.urls")),
 ]
 
 if settings.DEBUG:

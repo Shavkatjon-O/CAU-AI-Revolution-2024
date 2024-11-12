@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { SendHorizontal, CheckCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import coreApi from "@/lib/coreApi"; // Import the coreApi instance
 
 interface Message {
   text: string;
@@ -15,11 +16,41 @@ const ChatPage = () => {
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (input.trim()) {
       const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       setMessages([...messages, { text: input, sender: "User", timestamp }]);
       setInput("");
+
+      try {
+        // Send the query to the backend
+        const { data } = await coreApi.post("/chats/nutrition-assistant/", { query: input });
+
+        // Check if the data contains the 'response' array and extract the content from it
+        let responseText = "";
+
+        if (data && data.response && Array.isArray(data.response) && data.response.length > 0) {
+          // The content is in the first element of the array
+          const responseContent = data.response[0]; // Get the content from index 0
+          if (Array.isArray(responseContent) && responseContent.length > 1) {
+            responseText = responseContent[1]; // The actual message is at index 1
+          }
+        } else {
+          responseText = "Sorry, I couldn't understand the response.";
+        }
+
+        // Update the messages state with the response text
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: responseText, sender: "AI", timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }
+        ]);
+      } catch (error) {
+        console.error('Error while sending message to backend:', error);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: "Sorry, there was an error with the request.", sender: "AI", timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }
+        ]);
+      }
     }
   };
 
@@ -51,7 +82,6 @@ const ChatPage = () => {
                   <div>{message.sender === "User" && (<CheckCheck className="text-slate-300 size-4" />)}</div>
                 </div>
               </div>
-
             </div>
           </div>
         ))}
@@ -63,7 +93,7 @@ const ChatPage = () => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           className="flex-grow outline-none border-none ring-0 focus:outline-none focus:border-none focus:ring-0 bg-transparent"
-          placeholder="Write a message..."
+          placeholder="Ask a nutrition-related question..."
         />
         <Button
           onClick={handleSendMessage}
