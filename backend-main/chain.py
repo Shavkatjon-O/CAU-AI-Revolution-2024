@@ -1,5 +1,4 @@
 import os
-import environ
 
 from langchain import hub
 
@@ -16,24 +15,29 @@ from langchain_core.runnables import RunnablePassthrough
 
 from django.conf import settings
 
+from dotenv import load_dotenv, find_dotenv
+
+
+load_dotenv(find_dotenv())
+
 # -------------------------------------------------------------------------- #
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 
-doc_path = os.path.join(settings.BASE_DIR, "ai-database.txt")
-data = TextLoader(doc_path)
-docs = data.load()
+# doc_path = os.path.join(settings.BASE_DIR, "ai-database.txt")
+# data = TextLoader(doc_path)
+# docs = data.load()
 
 # -------------------------------------------------------------------------- #
 
 text_splitter = RecursiveCharacterTextSplitter()
-text_splits = text_splitter.split_documents(docs)
+# text_splits = text_splitter.split_documents(docs)
 
 # -------------------------------------------------------------------------- #
 
-embeddings = OpenAIEmbeddings(api_key=env("OPENAI_API_KEY"))
-vectorstore = FAISS.from_documents(text_splits, embeddings)
-retriever = vectorstore.as_retriever()
+embeddings = OpenAIEmbeddings(api_key=OPENAI_API_KEY)
+# vectorstore = FAISS.from_documents(text_splits, embeddings)
+# retriever = vectorstore.as_retriever()
 
 # -------------------------------------------------------------------------- #
 
@@ -75,7 +79,8 @@ def generate_rag_prompt(user_info):
     )
 
 query = {
-    "context": retriever | format_docs,
+    # "context": retriever | format_docs,
+    "context": None,  # No context since we're not loading docs
     "question": RunnablePassthrough(),
 }
 
