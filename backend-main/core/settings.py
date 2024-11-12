@@ -22,6 +22,7 @@ CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
     'https://cau-hackathon-admin.falconsoft.uz',
     'https://cau-hackathon.falconsoft.uz',
+    'http://localhost:3000',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -29,6 +30,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 CORS_ALLOWED_ORIGINS = [
     'https://cau-hackathon-admin.falconsoft.uz',
     'https://cau-hackathon.falconsoft.uz',
+    'http://localhost:3000',
 ]
 
 DJANGO_APPS = [
