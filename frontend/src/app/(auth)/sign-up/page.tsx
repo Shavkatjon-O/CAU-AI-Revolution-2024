@@ -12,38 +12,14 @@ import Link from 'next/link';
 
 import Cookies from 'js-cookie';
 import axios from 'axios';
-import * as z from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 const steps = ['Personal Info', 'Health Info', 'Dietary Preferences'];
 
-// Define Zod schema for validation
-const formSchema = z.object({
-  email: z.string().email('Invalid email address').min(1, 'Email is required'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  age: z.string().min(1, 'Age is required').regex(/^\d+$/, 'Age must be a number'),
-  gender: z.string().min(1, 'Gender is required'),
-  height: z.string().min(1, 'Height is required').regex(/^\d+(\.\d+)?$/, 'Height must be a number'),
-  weight: z.string().min(1, 'Weight is required').regex(/^\d+(\.\d+)?$/, 'Weight must be a number'),
-  activityLevel: z.string().min(1, 'Activity level is required'),
-  goal: z.string().min(1, 'Goal is required'),
-  dietaryPreferences: z.string().min(1, 'Dietary preferences are required'),
-  allergies: z.string().optional(),
-});
-
-type FormData = z.infer<typeof formSchema>;
-
 const Page = () => {
   const router = useRouter();
-  const methods = useForm<FormData>({
-    resolver: zodResolver(formSchema),
-  });
-  const { handleSubmit, formState: { errors } } = methods;
-
+  const methods = useForm(); // Initialize react-hook-form
   const [step, setStep] = useState(0);
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState({
     email: '',
     password: '',
     firstName: '',
@@ -76,7 +52,8 @@ const Page = () => {
           goal: formData.goal,
           dietary_preferences: formData.dietaryPreferences,
           allergies: formData.allergies,
-        };
+        }
+        console.log(payload)
         
         await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/register/`, payload);
 
@@ -117,22 +94,21 @@ const Page = () => {
   };
 
   return (
-    <div className="px-4">
+    <div className='px-4'>
       <FormProvider {...methods}>
         <div className="max-w-md mx-auto my-10 p-6 bg-white rounded-3xl shadow-2xl border">
-          <div className="flex items-center justify-center pb-6 font-semibold text-custom">
-            <span className="text-2xl">SafeBite</span>
+          <div className='flex items-center justify-center pb-6 font-semibold text-custom'>
+            <span className='text-3xl'>SafeBite</span>
           </div>
 
           <Image src="/img/sign-up-image.svg" alt="Image" width={256} height={256} className="mx-auto w-full mb-6 shadow-md rounded-3xl" />
 
-          <h2 className="text-xl font-bold mb-6 text-center">{steps[step]}</h2>
+          <h2 className="text-2xl font-bold mb-6 text-center">{steps[step]}</h2>
 
           {/* Step 1 - Personal Info */}
           {step === 0 && (
             <>
               <div className="relative">
-                {errors.email && <p className="text-red-500 text-sm">{errors.email?.message}</p>}
                 <Input
                   id="email"
                   name="email"
@@ -146,7 +122,6 @@ const Page = () => {
               </div>
 
               <div className="relative mt-4">
-                {errors.password && <p className="text-red-500 text-sm">{errors.password?.message}</p>}
                 <Input
                   id="password"
                   name="password"
@@ -160,7 +135,6 @@ const Page = () => {
               </div>
 
               <div className="relative mt-4">
-                {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName?.message}</p>}
                 <Input
                   id="firstName"
                   name="firstName"
@@ -168,12 +142,11 @@ const Page = () => {
                   onChange={handleChange}
                   placeholder="First name"
                   className="pl-10 h-12 focus:border-custom"
-                  />
+                />
                 <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
 
               <div className="relative mt-4">
-                {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName?.message}</p>}
                 <Input
                   id="lastName"
                   name="lastName"
@@ -181,7 +154,7 @@ const Page = () => {
                   onChange={handleChange}
                   placeholder="Last name"
                   className="pl-10 h-12 focus:border-custom"
-                  />
+                />
                 <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
             </>
@@ -202,7 +175,6 @@ const Page = () => {
                 />
                 <Calendar size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
-              {errors.age && <p className="text-red-500 text-sm">{errors.age?.message}</p>}
 
               <div className="relative mt-4">
                 <Select
@@ -218,7 +190,7 @@ const Page = () => {
                     <SelectItem value="Other">Other</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.gender && <p className="text-red-500 text-sm">{errors.gender?.message}</p>}
+                <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
 
               <div className="relative mt-4">
@@ -233,7 +205,6 @@ const Page = () => {
                 />
                 <Calendar size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
-              {errors.height && <p className="text-red-500 text-sm">{errors.height?.message}</p>}
 
               <div className="relative mt-4">
                 <Input
@@ -247,7 +218,6 @@ const Page = () => {
                 />
                 <Calendar size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
-              {errors.weight && <p className="text-red-500 text-sm">{errors.weight?.message}</p>}
 
               <div className="relative mt-4">
                 <Select
@@ -265,7 +235,7 @@ const Page = () => {
                     <SelectItem value="Very Active">Very Active</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.activityLevel && <p className="text-red-500 text-sm">{errors.activityLevel?.message}</p>}
+                <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
             </>
           )}
@@ -287,11 +257,10 @@ const Page = () => {
                     <SelectItem value="Maintain">Maintain</SelectItem>
                   </SelectContent>
                 </Select>
-                {errors.goal && <p className="text-red-500 text-sm">{errors.goal?.message}</p>}
+                <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
 
               <div className="relative mt-4">
-                {errors.dietaryPreferences && <p className="text-red-500 text-sm">{errors.dietaryPreferences?.message}</p>}
                 <Input
                   id="dietaryPreferences"
                   name="dietaryPreferences"
@@ -300,6 +269,7 @@ const Page = () => {
                   placeholder="Dietary Preferences"
                   className="pl-10 h-12 focus:border-custom"
                 />
+                <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
 
               <div className="relative mt-4">
@@ -311,17 +281,18 @@ const Page = () => {
                   placeholder="Allergies (if any)"
                   className="pl-10 h-12 focus:border-custom"
                 />
+                <User size={20} className="text-custom absolute left-3 top-1/2 transform -translate-y-1/2" />
               </div>
             </>
           )}
 
-          <div className="mt-6 flex justify-between gap-4">
+          <div className="mt-6 flex justify-between gap-3">
             {step > 0 && (
               <Button variant="secondary" onClick={handlePrevious} className="h-12 w-full">
                 Back
               </Button>
             )}
-            <Button onClick={handleSubmit(handleNext)} className="h-12 bg-custom hover:bg-indigo-700 w-full font-semibold">
+            <Button onClick={handleNext} className="h-12 bg-custom hover:bg-indigo-700 w-full font-semibold">
               {step === steps.length - 1 ? 'Submit' : 'Next'}
             </Button>
           </div>
