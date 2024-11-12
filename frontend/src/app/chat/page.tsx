@@ -3,7 +3,7 @@
 import { useState } from "react";
 // import { Input } from "@/components/ui/input";
 import {
-  Send,
+  SendHorizontal,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -41,7 +41,7 @@ const ChatPage = () => {
           </div>
         ))}
       </div>
-      <div className="px-6 py-4 flex items-center space-x-2 bg-white border-t border-gray-300 rounded-t-3xl">
+      <div className="px-6 py-4 flex items-center space-x-2 bg-slate-50 border-t border-gray-300 rounded-t-3xl">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
@@ -53,7 +53,7 @@ const ChatPage = () => {
           className="bg-custom text-white"
           size="icon"
         >
-          <Send />
+          <SendHorizontal />
         </Button>
       </div>
     </div>
