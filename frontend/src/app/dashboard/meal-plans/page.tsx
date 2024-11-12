@@ -110,7 +110,7 @@ const Page = () => {
       <div className="bg-white p-6 rounded-lg mb-6">
         <span className="mb-1">Title</span>
         <Input
-          className="mb-4 h-12"
+          className="mb-4 mt-1 h-12"
           placeholder="Enter meal name (e.g., Breakfast, Lunch, Dinner)"
           value={newMealName}
           onChange={(e) => setNewMealName(e.target.value)}
@@ -219,11 +219,14 @@ const Page = () => {
             <div className="flex justify-between items-start">
               <div>
                 <h2 className="text-xl font-semibold">{meal.mealName}</h2>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-custom mt-4">
                   Time: {meal.mealTime} | Priority: {meal.priority}
                 </p>
                 <div className="mt-4">
-                  <h3 className="text-lg">Ingredients</h3>
+                  <div className="w-max bg-indigo-500 rounded-lg mb-4">
+                    <h3 className="text-md p-2 text-white">Ingredients</h3>
+                  </div>
+
                   <ul className="list-disc pl-6">
                     {meal.ingredients.length > 0 ? (
                       meal.ingredients.map((ingredient, idx) => (
@@ -237,8 +240,9 @@ const Page = () => {
               </div>
               <Button
                 onClick={() => removeMealPlan(meal.id)}
-                className="p-2 text-red-500"
-                variant="ghost"
+                // className=""
+                size="icon"
+                variant="secondary"
               >
                 <Trash2 />
               </Button>

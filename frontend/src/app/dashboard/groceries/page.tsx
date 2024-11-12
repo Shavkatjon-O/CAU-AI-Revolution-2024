@@ -122,7 +122,7 @@ const Page = () => {
       <div className="mb-6 bg-white p-6 rounded-lg">
         <span className="mb-1">Title</span>
         <Input
-          className="mb-4 h-12"
+          className="mb-4 mt-1 h-12"
           placeholder="Enter shopping list name"
           value={newListName}
           onChange={(e) => setNewListName(e.target.value)}
@@ -218,11 +218,13 @@ const Page = () => {
             <div className="flex justify-between">
               <div>
                 <h2 className="text-xl font-semibold">{list.name}</h2>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-custom mt-4">
                   Due: {list.dueDate} | Priority: {list.priority}
                 </p>
-                <div className="mt-2">
-                  <h3 className="text-lg">Ingredients</h3>
+                <div className="mt-4">
+                  <div className="w-max bg-indigo-500 rounded-lg mb-4">
+                    <h3 className="text-md p-2 text-white">Ingredients</h3>
+                  </div>
                   <ul className="list-disc pl-6">
                     {list.ingredients.length > 0 ? (
                       list.ingredients.map((ingredient, idx) => (
