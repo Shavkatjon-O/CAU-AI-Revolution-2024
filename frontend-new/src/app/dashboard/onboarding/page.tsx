@@ -137,7 +137,7 @@ const Page = () => {
     <div className="size-full max-w-md mx-auto p-6 flex justify-center items-center">
       <div className="p-6 shadow-sm rounded-md border max-w-sm w-full">
 
-        <h1 className="text-center text-2xl font-bold text-custom">Profile Information</h1>
+        <h1 className="text-center text-2xl font-bold text-custom mb-6">Profile Information</h1>
 
         {/* Step 1 Form */}
         {step === 1 && (
