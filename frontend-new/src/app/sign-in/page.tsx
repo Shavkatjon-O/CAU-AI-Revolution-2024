@@ -23,7 +23,7 @@ const FormSchema = z.object({
   password: z.string().min(8, "Password must be at least 8 characters long"),
 });
 
-export function SignInForm() {
+export function Page() {
   const router = useRouter();
 
   const [message, setMessage] = useState("");
@@ -129,4 +129,4 @@ export function SignInForm() {
   );
 }
 
-export default SignInForm;
+export default Page;
