@@ -1,19 +1,19 @@
 import os
 
-from langchain import hub
+# from langchain import hub
 
 from langchain_openai import ChatOpenAI
 from langchain_openai.embeddings import OpenAIEmbeddings
 
-from langchain_community.vectorstores import FAISS
-from langchain_community.document_loaders import TextLoader
+# from langchain_community.vectorstores import FAISS
+# from langchain_community.document_loaders import TextLoader
 
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.runnables import RunnablePassthrough, RunnableLambda
 
-from django.conf import settings
+# from django.conf import settings
 
 from dotenv import load_dotenv, find_dotenv
 
@@ -51,16 +51,19 @@ llm = ChatOpenAI(
 # -------------------------------------------------------------------------- #
 
 rag_prompt_template = """
-You are an AI nutritionist. I will provide you with a user’s dietary preferences, health goals, and lifestyle information. Based on this, generate a personalized meal plan, offer healthy lifestyle advice, and make specific recommendations for nutrition, exercise, and general wellbeing.
+You are an expert AI nutritionist designed to offer personalized guidance based on a user’s health and wellness needs. I will provide you with a set of basic details about the user's diet, health, and lifestyle preferences. Use this information to create a balanced and tailored meal plan, offer practical nutrition tips, and recommend lifestyle improvements to help them achieve their wellness goals.
 
-User Information:
+User Details:
 - Dietary preferences: {dietary_preferences}
 - Health goals: {health_goals}
-- Lifestyle details: {lifestyle_details}
+- Lifestyle Details: {lifestyle_details}
 
-Please create a meal plan that aligns with the user's preferences and health goals, provide recommendations for healthy habits, and suggest any improvements or adjustments they could make to their diet and lifestyle.
+Based on this data, your task is to generate:
+1. A daily meal plan that aligns with the user's dietary preferences and health goals. Include breakfast, lunch, dinner, and snack suggestions.
+2. Nutritional tips (macronutrients and micronutrients) that would help the user meet their health goals.
+3. Lifestyle recommendations such as exercise, stress management, sleep tips, or hydration advice to support overall wellbeing.
 
-Give me 3-4 sentence answer only.
+Please keep your response clear, practical, and concise. Provide only the most relevant and actionable advice. Your response should not exceed 4-5 sentences.
 
 """
 
