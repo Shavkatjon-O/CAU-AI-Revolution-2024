@@ -28,10 +28,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen pb-16`}
       >
-        {children}
-        <NavigationMenu />
+        <div className="size-full overflow-y-scroll">
+          {children}
+          <NavigationMenu />
+        </div>
       </body>
     </html>
   );
