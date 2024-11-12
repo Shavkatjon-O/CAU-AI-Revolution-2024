@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 const Page = () => {
   return (
-    <div className="flex justify-center items-center">
+    <div className="size-full flex justify-center items-center">
       <Button asChild>
         <Link href="/sign-out">
           Sign Out
