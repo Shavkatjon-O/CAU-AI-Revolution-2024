@@ -4,7 +4,6 @@ import { useForm, FormProvider } from 'react-hook-form';
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { FormControl, FormLabel } from '@/components/ui/form';
 import { Mail, User, Calendar, ArrowRight } from 'lucide-react';
 
 const steps = ['Personal Info', 'Health Info', 'Dietary Preferences'];
@@ -56,174 +55,152 @@ const Page = () => {
         {/* Step 1 - Personal Info */}
         {step === 0 && (
           <>
-            <FormControl>
-              <div>
-                <FormLabel htmlFor="email">Email</FormLabel>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="Enter your email"
-                />
-                <Mail size={20} />
-              </div>
-            </FormControl>
+            <div className="relative">
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                className="pl-10"
+              />
+              <Mail size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
 
-            <FormControl className="mt-4">
-              <div>
-                <FormLabel htmlFor="password">Password</FormLabel>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  placeholder="Enter your password"
-                />
-                <User size={20} />
-              </div>
-            </FormControl>
+            <div className="relative mt-4">
+              <Input
+                id="password"
+                name="password"
+                type="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder="Enter your password"
+                className="pl-10"
+              />
+              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
 
-            <FormControl className="mt-4">
-              <div>
-                <FormLabel htmlFor="firstName">First Name</FormLabel>
-                <Input
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  placeholder="First Name"
-                />
-                <User size={20} />
-              </div>
-            </FormControl>
+            <div className="relative mt-4">
+              <Input
+                id="firstName"
+                name="firstName"
+                value={formData.firstName}
+                onChange={handleChange}
+                placeholder="First Name"
+                className="pl-10"
+              />
+              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
 
-            <FormControl className="mt-4">
-              <div>
-                <FormLabel htmlFor="lastName">Last Name</FormLabel>
-                <Input
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  placeholder="Last Name"
-                />
-                <User size={20} />
-              </div>
-            </FormControl>
+            <div className="relative mt-4">
+              <Input
+                id="lastName"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Last Name"
+                className="pl-10"
+              />
+              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
           </>
         )}
 
         {/* Step 2 - Health Info */}
         {step === 1 && (
           <>
-            <FormControl>
-              <div>
-                <FormLabel htmlFor="age">Age</FormLabel>
-                <Input
-                  id="age"
-                  name="age"
-                  type="number"
-                  value={formData.age}
-                  onChange={handleChange}
-                  placeholder="Age"
-                />
-                <Calendar size={20} />
-              </div>
-            </FormControl>
+            <div className="relative">
+              <Input
+                id="age"
+                name="age"
+                type="number"
+                value={formData.age}
+                onChange={handleChange}
+                placeholder="Age"
+                className="pl-10"
+              />
+              <Calendar size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
 
-            <FormControl className="mt-4">
-              <div>
-                <FormLabel htmlFor="gender">Gender</FormLabel>
-                <Input
-                  id="gender"
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  placeholder="Gender"
-                />
-                <User size={20} />
-              </div>
-            </FormControl>
+            <div className="relative mt-4">
+              <Input
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                placeholder="Gender"
+                className="pl-10"
+              />
+              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
 
-            <FormControl className="mt-4">
-              <div>
-                <FormLabel htmlFor="height">Height (cm)</FormLabel>
-                <Input
-                  id="height"
-                  name="height"
-                  type="number"
-                  value={formData.height}
-                  onChange={handleChange}
-                  placeholder="Height in cm"
-                />
-                <Calendar size={20} />
-              </div>
-            </FormControl>
+            <div className="relative mt-4">
+              <Input
+                id="height"
+                name="height"
+                type="number"
+                value={formData.height}
+                onChange={handleChange}
+                placeholder="Height in cm"
+                className="pl-10"
+              />
+              <Calendar size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
 
-            <FormControl className="mt-4">
-              <div>
-                <FormLabel htmlFor="weight">Weight (kg)</FormLabel>
-                <Input
-                  id="weight"
-                  name="weight"
-                  type="number"
-                  value={formData.weight}
-                  onChange={handleChange}
-                  placeholder="Weight in kg"
-                />
-                <Calendar size={20} />
-              </div>
-            </FormControl>
+            <div className="relative mt-4">
+              <Input
+                id="weight"
+                name="weight"
+                type="number"
+                value={formData.weight}
+                onChange={handleChange}
+                placeholder="Weight in kg"
+                className="pl-10"
+              />
+              <Calendar size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
           </>
         )}
 
         {/* Step 3 - Dietary Preferences */}
         {step === 2 && (
           <>
-            <FormControl>
-              <div>
-                <FormLabel htmlFor="activityLevel">Activity Level</FormLabel>
-                <Input
-                  id="activityLevel"
-                  name="activityLevel"
-                  value={formData.activityLevel}
-                  onChange={handleChange}
-                  placeholder="Activity Level"
-                />
-                <User size={20} />
-              </div>
-            </FormControl>
+            <div className="relative">
+              <Input
+                id="activityLevel"
+                name="activityLevel"
+                value={formData.activityLevel}
+                onChange={handleChange}
+                placeholder="Activity Level"
+                className="pl-10"
+              />
+              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
 
-            <FormControl className="mt-4">
-              <div>
-                <FormLabel htmlFor="dietaryPreferences">Dietary Preferences</FormLabel>
-                <Input
-                  id="dietaryPreferences"
-                  name="dietaryPreferences"
-                  value={formData.dietaryPreferences}
-                  onChange={handleChange}
-                  placeholder="Dietary Preferences (e.g. vegan, keto)"
-                />
-                <User size={20} />
-              </div>
-            </FormControl>
+            <div className="relative mt-4">
+              <Input
+                id="dietaryPreferences"
+                name="dietaryPreferences"
+                value={formData.dietaryPreferences}
+                onChange={handleChange}
+                placeholder="Dietary Preferences (e.g. vegan, keto)"
+                className="pl-10"
+              />
+              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
 
-            <FormControl className="mt-4">
-              <div>
-                <FormLabel htmlFor="allergies">Allergies</FormLabel>
-                <Input
-                  id="allergies"
-                  name="allergies"
-                  value={formData.allergies}
-                  onChange={handleChange}
-                  placeholder="Any allergies?"
-                />
-                <User size={20} />
-              </div>
-            </FormControl>
+            <div className="relative mt-4">
+              <Input
+                id="allergies"
+                name="allergies"
+                value={formData.allergies}
+                onChange={handleChange}
+                placeholder="Any allergies?"
+                className="pl-10"
+              />
+              <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2" />
+            </div>
           </>
         )}
 
