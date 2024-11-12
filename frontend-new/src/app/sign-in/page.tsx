@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { signIn } from '@/services/auth';
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const FormSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -58,9 +59,21 @@ export function SignInForm() {
   };
 
   return (
-    <div className="size-full flex justify-center items-center">
+    <div className="size-full flex justify-center items-center px-4">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="max-w-md w-full px-6 space-y-3">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="py-6 max-w-sm w-full px-6 space-y-3 shadow-sm rounded-md border">
+          <h1 className="text-custom text-2xl font-bold text-center">SafeBite</h1>
+
+          <div>
+            <Image
+              src="/images/auth-image.svg"
+              alt="Auth Image"
+              width={300}
+              height={300}
+              className="w-full"
+            />
+          </div>
+
           <FormField
             control={form.control}
             name="email"
@@ -97,6 +110,12 @@ export function SignInForm() {
             )}
           />
 
+          {message && (
+            <div className="flex justify-center w-full bg-slate-100 py-2 rounded-md">
+              <span className="text-indigo-500">{message}</span>
+            </div>
+          )}
+
           <Button
             type="submit"
             className="w-full h-12 bg-custom hover:bg-indigo-800 font-semibold"
@@ -104,11 +123,6 @@ export function SignInForm() {
             Sign In
           </Button>
 
-          <div className="flex justify-center">
-            {message && (
-              <span className="text-indigo-500">{message}</span>
-            )}
-          </div>
         </form>
       </Form>
     </div>
