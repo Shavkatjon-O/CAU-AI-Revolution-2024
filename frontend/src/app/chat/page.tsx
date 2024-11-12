@@ -41,7 +41,7 @@ const ChatPage = () => {
           </div>
         ))}
       </div>
-      <div className="px-6 py-4 flex items-center space-x-2 bg-slate-50 border-t border-gray-300 rounded-t-3xl">
+      <div className="px-6 py-4 flex items-center space-x-2 bg-slate-50 border-t border-gray-300 rounded-t-3xl shadow-2xl">
         <input
           value={input}
           onChange={(e) => setInput(e.target.value)}
