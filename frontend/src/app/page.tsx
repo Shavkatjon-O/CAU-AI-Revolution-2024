@@ -7,7 +7,7 @@ const Page = () => {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/dashboard');
+    router.push('/sign-in');
   }, [router]);
 
   return null;
