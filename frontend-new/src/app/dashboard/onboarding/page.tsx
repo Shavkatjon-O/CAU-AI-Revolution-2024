@@ -236,7 +236,7 @@ const Page = () => {
                   <FormItem>
                     <FormLabel>Goal</FormLabel>
                     <FormControl>
-                      <Select {...field}>
+                      <Select value={field.value} onValueChange={field.onChange}>
                         <SelectTrigger className="w-full h-12">
                           <SelectValue placeholder="Select goal" />
                         </SelectTrigger>
@@ -293,7 +293,7 @@ const Page = () => {
                   <FormItem>
                     <FormLabel>Activity Level</FormLabel>
                     <FormControl>
-                      <Select {...field}>
+                      <Select value={field.value} onValueChange={field.onChange}>
                         <SelectTrigger className="w-full h-12">
                           <SelectValue placeholder="Select activity level" />
                         </SelectTrigger>
