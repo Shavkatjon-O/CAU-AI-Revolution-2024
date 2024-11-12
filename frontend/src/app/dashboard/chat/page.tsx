@@ -62,7 +62,7 @@ const ChatPage = () => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex-grow p-4 overflow-y-auto gap-y-4 flex flex-col-reverse">
+      <div className="flex-grow p-4 overflow-y-auto gap-y-4 flex flex-col">
         {messages.map((message, index) => (
           <div
             key={index}
