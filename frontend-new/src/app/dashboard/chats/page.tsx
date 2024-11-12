@@ -48,7 +48,7 @@ const Page = () => {
           ...prevMessages,
           {
             text: responseText,
-            sender: "AI",
+            sender: "AI Assistant",
             timestamp: new Date().toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
@@ -61,7 +61,7 @@ const Page = () => {
           ...prevMessages,
           {
             text: "Sorry, there was an error with the request.",
-            sender: "AI",
+            sender: "AI Assistant",
             timestamp: new Date().toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
@@ -96,7 +96,7 @@ const Page = () => {
                   <span>{message.text}</span>
                 </div>
                 <div className="flex items-center justify-between space-x-2">
-                  <div className="text-xs font-semibold text-slate-100">
+                  <div className={`text-xs font-semibold ${message.sender === "User" ? "text-slate-100" : "text-slate-600"}`}>
                     {message.timestamp}
                   </div>
                   {message.sender === "User" && (
@@ -122,7 +122,6 @@ const Page = () => {
         <Button
           onClick={handleSendMessage}
           className="bg-custom hover:bg-indigo-800 text-white rounded-lg h-10 w-10"
-          // size="icon"
         >
           <SendHorizontal />
         </Button>
