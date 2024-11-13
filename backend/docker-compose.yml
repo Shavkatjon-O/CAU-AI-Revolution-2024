@@ -1,0 +1,62 @@
+services:
+  db:
+    image: postgres:16
+    container_name: ${PROJECT_NAME}_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_HOST=${DB_HOST}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_PORT=${DB_PORT}
+    restart: always 
+
+  web: &web
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_NAME}_web
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:${DJANGO_PORT} --workers=4
+    volumes:
+      - ./:/app
+      - ./locales:/home/app/web/locales
+      - ./static:/home/app/web/static
+      - ./media:/home/app/web/media
+    security_opt:
+      - seccomp:unconfined
+    env_file:
+      - .env
+    environment:
+      - TZ=Asia/Tashkent
+    ports:
+      - ${DJANGO_PORT}:${DJANGO_PORT}
+    depends_on:
+      - db
+    restart: always
+
+  redis:
+    container_name: ${PROJECT_NAME}_redis
+    image: redis:6-alpine
+    restart: always
+
+  # celery_worker:
+  #   container_name: ${PROJECT_NAME}_celery_worker
+  #   <<: *web
+  #   ports: [ ]
+  #   command: celery -A core worker --loglevel=info -c ${CELERY_WORKERS}
+  #   restart: always
+  #   depends_on:
+  #     - redis
+  # # celery -A core worker --beat --scheduler celery.beat.PersistentScheduler --loglevel=info  -c ${CELERY_WORKERS}
+  # celery_beat:
+  #   container_name: ${PROJECT_NAME}_celery_beat
+  #   <<: *web
+  #   ports: [ ]
+  #   command: celery -A core beat --scheduler celery.beat.PersistentScheduler --loglevel=info
+  #   restart: always
+  #   depends_on:
+  #     - redis
+
+volumes:
+  postgres_data:

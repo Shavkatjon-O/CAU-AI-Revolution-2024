@@ -47,6 +47,13 @@ services:
       - postgres
     restart: always
 
+  redis:
+    container_name: cau_hackathon_redis
+    image: redis:6-alpine
+    restart: always
+    ports:
+      - 6380:6380
+
   frontend:
     container_name: cau_hackathon_frontend
     hostname: frontend
