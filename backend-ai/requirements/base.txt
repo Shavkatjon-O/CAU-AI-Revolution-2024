@@ -1,0 +1,44 @@
+django==4.2.11
+psycopg2-binary==2.9.9
+python-environ==0.4.54
+django-unfold==0.39.0
+drf-spectacular==0.27.2 
+drf-spectacular-sidecar==2024.7.1
+
+# Images
+Pillow==10.4.0
+
+# Rest Framework
+djangorestframework==3.15.2
+
+# Translations
+django-rosetta==0.10.0
+django-modeltranslation==0.19.9
+
+cryptography==43.0.1
+psycopg2==2.9.9 
+PyJWT==2.9.0
+django-cors-headers==4.4.0
+django-filter==24.3
+redis==5.1.1
+django-redis==5.4.0
+celery==5.4.0 
+requests==2.32.3
+
+# Other
+setuptools==75.1.0
+
+# Web server
+gunicorn==23.0.0
+
+# Logger
+loguru==0.7.2
+
+# Bot
+aiogram==3.13.1
+
+# Pandas
+pandas==2.2.3 
+
+# OPENAI
+openai==1.54.5 

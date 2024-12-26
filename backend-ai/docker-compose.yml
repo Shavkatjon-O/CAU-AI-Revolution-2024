@@ -1,0 +1,148 @@
+# services:
+#   db:
+#     image: postgres:16
+#     container_name: ${PROJECT_NAME}_db
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data/
+#     environment:
+#       - POSTGRES_USER=${DB_USER}
+#       - POSTGRES_PASSWORD=${DB_PASSWORD}
+#       - POSTGRES_HOST=${DB_HOST}
+#       - POSTGRES_DB=${DB_NAME}
+#       - POSTGRES_PORT=${DB_PORT}
+#     restart: always 
+
+#   web: &web
+#     build:
+#       context: ./
+#       dockerfile: Dockerfile
+#     container_name: ${PROJECT_NAME}_web
+#     command: gunicorn core.wsgi:application --bind 0.0.0.0:${DJANGO_PORT} --workers=4
+#     volumes:
+#       - ./:/app
+#       - ./locales:/home/app/web/locales
+#       - ./static:/home/app/web/static
+#       - ./media:/home/app/web/media
+#     security_opt:
+#       - seccomp:unconfined
+#     env_file:
+#       - .env
+#     environment:
+#       - TZ=Asia/Tashkent
+#     ports:
+#       - ${DJANGO_PORT}:${DJANGO_PORT}
+#     depends_on:
+#       - db
+#     restart: always
+
+#   redis:
+#     container_name: ${PROJECT_NAME}_redis
+#     image: redis:6-alpine
+#     restart: always
+
+#   # celery_worker:
+#   #   container_name: ${PROJECT_NAME}_celery_worker
+#   #   <<: *web
+#   #   ports: [ ]
+#   #   command: celery -A core worker --loglevel=info -c ${CELERY_WORKERS}
+#   #   restart: always
+#   #   depends_on:
+#   #     - redis
+#   # # celery -A core worker --beat --scheduler celery.beat.PersistentScheduler --loglevel=info  -c ${CELERY_WORKERS}
+#   # celery_beat:
+#   #   container_name: ${PROJECT_NAME}_celery_beat
+#   #   <<: *web
+#   #   ports: [ ]
+#   #   command: celery -A core beat --scheduler celery.beat.PersistentScheduler --loglevel=info
+#   #   restart: always
+#   #   depends_on:
+#   #     - redis
+
+# volumes:
+#   postgres_data:
+
+services:
+  postgres:
+    container_name: safebite_postgres
+    hostname: postgres
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=safebite
+    ports:
+      - 5439:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready --username=admin --dbname=safebite" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: always
+
+  backend:
+    container_name: safebite_backend
+    hostname: backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: gunicorn -c ./gunicorn_conf.py
+    volumes:
+      - ./logs:/home/app/logs
+      - ./static:/home/app/static
+      - ./media:/home/app/media/
+      - ./locales:/home/app/locales
+    environment:
+      - LOGGER_BOT_TOKEN=7103058255:AAEgd6zSw9PAvwneoCJ3OD0K2jEO4FUSnAo
+      - LOGGER_CHAT_ID=708551357
+      - DEBUG=False
+      # Postgres
+      - DB_ENGINE=django.db.backends.postgresql_psycopg2
+      - DB_NAME=safebite
+      - DB_USER=admin
+      - DB_PASSWORD=admin
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      # Django
+      - SECRET_KEY=SECRET_KEY
+      - DJANGO_SETTINGS_MODULE=core.settings.production
+      # JWT
+      - JWT_ACCESS_TOKEN_SECRET=qwerty
+      - JWT_REFRESH_TOKEN_SECRET=ytrewq
+      - JWT_ALGORITHM=HS256
+      - ENCRYPTION_KEY=t599LoZlZAMadx2MyitgmZssvQsaWNw-NNYPfzUohu4=
+      - ACCESS_TOKEN_EXPIRATION_MINUTES=60
+      - REFRESH_TOKEN_EXPIRATION_DAYS=30
+      # Email
+      - EMAIL_HOST=smtp.gmail.com
+      - EMAIL_HOST_USER=behaletsgo@gmail.com
+      - EMAIL_HOST_PASSWORD=pkmb nnzt hlva otlm
+      - EMAIL_PORT=587
+      - EMAIL_USE_TLS=True
+      - EMAIL_USE_SSL=False
+      # REDIS
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=1
+      #OTP
+      - OTP_LIFETIME=3600
+      #OPEN AI
+      - OPENAI_API_KEY=key
+
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 8089:8000
+    depends_on:
+      - postgres
+    restart: always
+
+  redis:
+    container_name: safebite_redis
+    hostname: redis
+    image: redis:6-alpine
+    restart: always
+
+volumes:
+  postgres_data:
